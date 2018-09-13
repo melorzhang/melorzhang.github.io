@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="一个基于前端，配合node的学习路线">
+    <meta name="author" content="Melor">
+    <meta name="keyword" content="全栈技术">
+    <link rel="canonical" href="http://yoursite.com/2018/03/07/vue-e5-85-a5-e9-97-a8-e7-ac-94-e8-ae-b0-ef-bc-88-e4-b8-80-ef-bc-89/">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="alternate" type="application/atom+xml" title="&lt;div&gt;Melor&#39;s Blog&lt;/div&gt;" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <title>
+        
+        vue入门笔记（一）｜Melor的博客
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/main.css">
+
+    
+      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/css/highlight.css">
+    
+
+    
+
+
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- user customization -->
+    <link rel="stylesheet" href="/css/arsnippet.css">
+    <script src="/js/arsnippet.css.js"></script>
+</head>
+
+<style>
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/">
+            <div>Melor's Blog</div>
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/">首页</a>
+                </li>
+              
+                <li>
+                  <a href="/archives/">博文列表</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/images/default_bg.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>vue入门笔记（一）</h1>
+                        
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Melor</span>
+                               <span class="meta-item">Date: 2018-03-07</span>
+                               
+                                 <span class="meta-item">Updated On: 2018-09-13</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/categories/#vue相关"
+                                 title="vue相关">vue相关</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <div>什么都懂一点，生活更美好一些</div>
+          <h1 id="v-bind-缩写"><a href="#v-bind-缩写" class="headerlink" title="v-bind 缩写"></a>v-bind 缩写</h1><pre><code>&lt;!-- 完整语法 --&gt;
+&lt;a v-bind:href=&quot;url&quot;&gt;...&lt;/a&gt;
+
+&lt;!-- 缩写 --&gt;
+&lt;a :href=&quot;url&quot;&gt;...&lt;/a&gt;
+</code></pre><h1 id="v-on-缩写"><a href="#v-on-缩写" class="headerlink" title="v-on 缩写"></a>v-on 缩写</h1><pre><code>&lt;!-- 完整语法 --&gt;
+&lt;a v-on:click=&quot;doSomething&quot;&gt;...&lt;/a&gt;
+
+&lt;!-- 缩写 --&gt;
+&lt;a @click=&quot;doSomething&quot;&gt;...&lt;/a&gt;
+</code></pre><h1 id="静态数据vs动态数据"><a href="#静态数据vs动态数据" class="headerlink" title="静态数据vs动态数据"></a>静态数据vs动态数据</h1><p>静态数据指的是别的数据更新后，这个数据的值不会受影响的数据，静态数据也是能改变的； 动态数据指的是别的数据更新后，这个数据也会随之更新的数据，动态数据也是可以自行改变的，但需要设置setter方法去更新关联的静态数据。 静态数据放在data里，动态数据放在computed里， 一般情况下computed里的[key]都是function的函数名，[value]是function的返回结果；</p>
+<pre><code>data: {
+    firstName: &apos;Foo&apos;,
+    lastName: &apos;Bar&apos;
+},
+computed: {
+    fullName: function () {
+        return this.firstName + &apos; &apos; + this.lastName
+    }
+}
+</code></pre><p>但也可以使用对象设置属性的setter</p>
+<pre><code>computed: {
+  fullName: {
+    // getter
+    get: function () {
+      return this.firstName + &apos; &apos; + this.lastName
+    },
+    // setter
+    set: function (newValue) {
+      var names = newValue.split(&apos; &apos;)
+      this.firstName = names[0]
+      this.lastName = names[names.length - 1]
+    }
+  }
+}
+</code></pre><p>若静态数据发生改变后，需要执行某些操作，需要在watch属性下注册该数据，</p>
+<h1 id="this的指向"><a href="#this的指向" class="headerlink" title="this的指向"></a>this的指向</h1><p>vue内this的指向需要使用者对this的指向有较为清楚的理解，因为this都需要自己指向到当前的vue实例，不然很容易踩坑。这点对使用者其实不是太友好的。</p>
+<h1 id="class的绑定"><a href="#class的绑定" class="headerlink" title="class的绑定"></a>class的绑定</h1><p>使用计算属性解决，</p>
+<pre><code>&lt;div v-bind:class=&quot;classObject&quot;&gt;&lt;/div&gt;
+
+
+data: {
+  isActive: true,
+  error: null
+},
+computed: {
+  classObject: function () {
+    return {
+      active: this.isActive &amp;&amp; !this.error,
+      &apos;text-danger&apos;: this.error &amp;&amp; this.error.type === &apos;fatal&apos;
+    }
+  }
+}
+</code></pre><p>也可以使用数组</p>
+<pre><code>&lt;div v-bind:class=&quot;[{ active: isActive }, errorClass]&quot;&gt;&lt;/div&gt;
+</code></pre><p>这种也可以的兼容，好不好就各有看法啦， 对于组件来说，组件的class会直接挂载到组件渲染后的根节点上，</p>
+<h1 id="绑定内联样式"><a href="#绑定内联样式" class="headerlink" title="绑定内联样式"></a>绑定内联样式</h1><p>通过对象的方式绑定样式.根据文档说法，支持驼峰和连缀的写法，但是建议使用驼峰写法。</p>
+<pre><code>&lt;div v-bind:style=&quot;styleObject&quot;&gt;&lt;/div&gt;
+
+
+data: {
+  styleObject: {
+    color: &apos;red&apos;,
+    fontSize: &apos;13px&apos;
+  }
+}
+</code></pre><p>没错，也可以使用数组</p>
+<pre><code>&lt;div v-bind:style=&quot;[baseStyles, overridingStyles]&quot;&gt;&lt;/div&gt;
+</code></pre><p>据文档说明，样式前缀vue会自动加载，不用考虑。 从 2.3.0 起你可以为 style 绑定中的属性提供一个包含多个值的数组，常用于提供多个带前缀的值，例如：</p>
+<pre><code>&lt;div :style=&quot;{ display: [&apos;-webkit-box&apos;, &apos;-ms-flexbox&apos;, &apos;flex&apos;] }&quot;&gt;&lt;/div&gt;
+</code></pre><p>这样写只会渲染数组中最后一个被浏览器支持的值。在本例中，如果浏览器支持不带浏览器前缀的 flexbox，那么就只会渲染 display: flex。</p>
+<h1 id="条件渲染"><a href="#条件渲染" class="headerlink" title="条件渲染"></a>条件渲染</h1><p>参考例子使用，</p>
+<pre><code>&lt;div v-if=&quot;type === &apos;A&apos;&quot;&gt;
+  A
+&lt;/div&gt;
+&lt;div v-else-if=&quot;type === &apos;B&apos;&quot;&gt;
+  B
+&lt;/div&gt;
+&lt;div v-else&gt;
+  Not A/B
+&lt;/div&gt;
+</code></pre><p>当包裹元素为多个，使用template包裹使用，template不会编译节点，</p>
+<pre><code>&lt;template v-if=&quot;ok&quot;&gt;
+  &lt;h1&gt;Title&lt;/h1&gt;
+  &lt;p&gt;Paragraph 1&lt;/p&gt;
+  &lt;p&gt;Paragraph 2&lt;/p&gt;
+&lt;/template&gt;
+</code></pre><p>· 当 v-if 与 v-for 一起使用时，v-for 具有比 v-if 更高的优先级。</p>
+<h1 id="防止输入数据保留，使用key属性"><a href="#防止输入数据保留，使用key属性" class="headerlink" title="防止输入数据保留，使用key属性"></a>防止输入数据保留，使用key属性</h1><p>下面例子中，如果不使用key属性，在切换后，输入框会保留之前的数据，当然，不使用key，使用v-modul绑定数据也是可以的</p>
+<pre><code>&lt;template v-if=&quot;loginType === &apos;username&apos;&quot;&gt;
+  &lt;label&gt;Username&lt;/label&gt;
+  &lt;input placeholder=&quot;Enter your username&quot; key=&quot;username-input&quot;&gt;
+&lt;/template&gt;
+&lt;template v-else&gt;
+  &lt;label&gt;Email&lt;/label&gt;
+  &lt;input placeholder=&quot;Enter your email address&quot; key=&quot;email-input&quot;&gt;
+&lt;/template&gt;
+</code></pre><h1 id="v-show"><a href="#v-show" class="headerlink" title="v-show"></a>v-show</h1><pre><code>&lt;h1 v-show=&quot;ok&quot;&gt;Hello!&lt;/h1&gt;
+</code></pre><p>v-show 不支持 <code>&lt;template&gt;</code> 元素，也不支持 v-else。 v-if 是“真正”的条件渲染，因为它会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建。 v-if 也是惰性的：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。 相比之下，v-show 就简单得多——不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 进行切换。 一般来说，v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。因此，如果需要非常频繁地切换，则使用 v-show 较好；如果在运行时条件很少改变，则使用 v-if 较好。</p>
+
+          
+            <div>广告位招租</div>
+          
+          <hr>
+          <ul class="pager">
+              
+              <li class="previous">
+                  <a href="/2018/03/08/vue-e5-85-a5-e9-97-a8-e7-ac-94-e8-ae-b0-ef-bc-88-e4-ba-8c-ef-bc-89/" data-toggle="tooltip" data-placement="left"
+                     title="vue入门笔记（二）">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/2018/03/05/centos-e5-ae-89-e8-a3-85-nodejs/" data-toggle="tooltip" data-placement="top"
+                     title="centos 安装 nodejs">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+        
+  <br>
+  
+
+  
+  </div>
+
+
+        
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#v-bind-缩写"><span class="toc-number">1.</span> <span class="toc-text">v-bind 缩写</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#v-on-缩写"><span class="toc-number">2.</span> <span class="toc-text">v-on 缩写</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#静态数据vs动态数据"><span class="toc-number">3.</span> <span class="toc-text">静态数据vs动态数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#this的指向"><span class="toc-number">4.</span> <span class="toc-text">this的指向</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#class的绑定"><span class="toc-number">5.</span> <span class="toc-text">class的绑定</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#绑定内联样式"><span class="toc-number">6.</span> <span class="toc-text">绑定内联样式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#条件渲染"><span class="toc-number">7.</span> <span class="toc-text">条件渲染</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#防止输入数据保留，使用key属性"><span class="toc-number">8.</span> <span class="toc-text">防止输入数据保留，使用key属性</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#v-show"><span class="toc-number">9.</span> <span class="toc-text">v-show</span></a></li></ol>
+        
+    </div>
+  </div>
+
+
+      </div>
+  </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer>
+    <div class="text-center">
+      <ul class="list-inline">
+          
+              <li>
+                  <a href="/atom.xml" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+          
+          
+
+          
+
+          
+
+          
+              <li>
+                  <a target="_blank"  href="https://github.com/melorzhang">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+          
+
+          
+              <li>
+                  <a href="mailto:497112718@qq.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+      </ul>
+     <div class="text-muted copyright">
+            &copy;
+            
+              2018
+            
+            
+              <i class="fa fa-heart"></i>
+            
+            Melor
+        <br>
+          
+          
+          
+          
+      </div>
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

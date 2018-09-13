@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="一个基于前端，配合node的学习路线">
+    <meta name="author" content="Melor">
+    <meta name="keyword" content="全栈技术">
+    <link rel="canonical" href="http://yoursite.com/2018/06/06/e9-9a-8f-e7-ac-94-20180606/">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="alternate" type="application/atom+xml" title="&lt;div&gt;Melor&#39;s Blog&lt;/div&gt;" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <title>
+        
+        随笔-20180606｜Melor的博客
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/main.css">
+
+    
+      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/css/highlight.css">
+    
+
+    
+
+
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- user customization -->
+    <link rel="stylesheet" href="/css/arsnippet.css">
+    <script src="/js/arsnippet.css.js"></script>
+</head>
+
+<style>
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/">
+            <div>Melor's Blog</div>
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/">首页</a>
+                </li>
+              
+                <li>
+                  <a href="/archives/">博文列表</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/images/default_bg.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>随笔-20180606</h1>
+                        
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Melor</span>
+                               <span class="meta-item">Date: 2018-06-06</span>
+                               
+                                 <span class="meta-item">Updated On: 2018-09-13</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/categories/#未分类"
+                                 title="未分类">未分类</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <div>什么都懂一点，生活更美好一些</div>
+          <p>最近在研究react的ssr，找了很多资料，也没几篇关于客户端开发热加载的文章，甚是无奈，解决react的ssr，就要解决以下的几个问题： 其一，代码的模块规范。如果react需要ssr，你就一定会用到node。node在ssr方面的作用相当于在客户端接收页面数据前，把客户端渲染后的结果解析出来，然后把解析的结果返回给客户端。就目前来讲，node不支持使用<code>import</code>关键字，专业点的说法是‘node使用CommonJS的规范，通过require关键字引入依赖’，但相信大家使用react应该90%都是使用import引入相关依赖的，import是es6规范，使用的规范不一致，这就造成你写得代码不能直接在node上使用。如果要使用，就要经过babel编译成对应规范才行。这导致了你编译后的代码可读性非常差，无法直接源码调试，出了问题还不一定能找到问题。 其二，代码分割。项目如果很小，只有那么三几个页面的话，代码分割其实不是你太需要关注的问题，但当你的项目足够的大，代码分割就很有必要了。所谓的代码分割，实际上就是相当于把页面组件分开打包，然后按需加载。但代码分割并不算一个很大的问题，当代码分割遇上ssr就变成问题了。代码分割后相关引用的指代也是让我手足无措的一个方面。 就目前的调试开发来说，第一个问题，暂且是解决了，第二个问题看看遵循react-loadable的文档能不能完成。解决第一个问题的代码放到<a href="https://github.com/melorzhang/universal_app_demo" target="_blank" rel="noopener">github</a>托管了。后面解决了第二问题也会更新到项目上去。</p>
+<hr>
+<p>最近微软收购了github相信大家都知道了，nodejs的作者推出了一个叫deno的项目，跟nodejs类似，但是是用typescript写得，然后不知道是不是因为这个，npm上面的包，最近的下载量出现了跳崖式的下跌，不知道后面会不会有什么大新闻出来。同行各种到deno项目下发表‘不要更新了，老子学不动了’的言论真的挺无语的，deno不会马上取代node，但新事物学习一个也没什么坏处，新事物总会或者说终会取代旧事物，在被取代前学会就好了。</p>
+
+          
+            <div>广告位招租</div>
+          
+          <hr>
+          <ul class="pager">
+              
+              <li class="previous">
+                  <a href="/2018/06/08/e4-bd-bf-e7-94-a8easymock-e6-a8-a1-e6-8b-9f-e6-8e-a5-e5-8f-a3-e8-bf-94-e5-9b-9e/" data-toggle="tooltip" data-placement="left"
+                     title="使用easymock模拟接口返回">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/2018/05/24/windows-e4-b8-8b-e6-9f-a5-e7-9c-8b-e7-ab-af-e5-8f-a3-e5-8d-a0-e7-94-a8/" data-toggle="tooltip" data-placement="top"
+                     title="windows下 查看端口占用">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+        
+  <br>
+  
+
+  
+  </div>
+
+
+        
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          
+        
+    </div>
+  </div>
+
+
+      </div>
+  </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer>
+    <div class="text-center">
+      <ul class="list-inline">
+          
+              <li>
+                  <a href="/atom.xml" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+          
+          
+
+          
+
+          
+
+          
+              <li>
+                  <a target="_blank"  href="https://github.com/melorzhang">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+          
+
+          
+              <li>
+                  <a href="mailto:497112718@qq.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+      </ul>
+     <div class="text-muted copyright">
+            &copy;
+            
+              2018
+            
+            
+              <i class="fa fa-heart"></i>
+            
+            Melor
+        <br>
+          
+          
+          
+          
+      </div>
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

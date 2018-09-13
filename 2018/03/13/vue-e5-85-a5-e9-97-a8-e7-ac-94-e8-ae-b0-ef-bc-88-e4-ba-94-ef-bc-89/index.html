@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="一个基于前端，配合node的学习路线">
+    <meta name="author" content="Melor">
+    <meta name="keyword" content="全栈技术">
+    <link rel="canonical" href="http://yoursite.com/2018/03/13/vue-e5-85-a5-e9-97-a8-e7-ac-94-e8-ae-b0-ef-bc-88-e4-ba-94-ef-bc-89/">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="alternate" type="application/atom+xml" title="&lt;div&gt;Melor&#39;s Blog&lt;/div&gt;" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <title>
+        
+        vue入门笔记（五）｜Melor的博客
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/main.css">
+
+    
+      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/css/highlight.css">
+    
+
+    
+
+
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- user customization -->
+    <link rel="stylesheet" href="/css/arsnippet.css">
+    <script src="/js/arsnippet.css.js"></script>
+</head>
+
+<style>
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/">
+            <div>Melor's Blog</div>
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/">首页</a>
+                </li>
+              
+                <li>
+                  <a href="/archives/">博文列表</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/images/default_bg.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>vue入门笔记（五）</h1>
+                        
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Melor</span>
+                               <span class="meta-item">Date: 2018-03-13</span>
+                               
+                                 <span class="meta-item">Updated On: 2018-09-13</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/categories/#vue相关"
+                                 title="vue相关">vue相关</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <div>什么都懂一点，生活更美好一些</div>
+          <h1 id="组件（下）"><a href="#组件（下）" class="headerlink" title="组件（下）"></a>组件（下）</h1><h2 id="自定义事件"><a href="#自定义事件" class="headerlink" title="自定义事件"></a>自定义事件</h2><p>自定义事件解决了父组件和子组件间通信的问题。如前文所述，父组件通过prop传递值到子组件，但子组件不应该直接修改父组件的值，所以有了自定义事件来解决这个需求。 类似addEventListener 和 dispatchEvent，但是不是别名的关系。 使用 $on(eventName) 监听事件 使用 $emit(eventName, optionalPayload) 触发事件</p>
+<pre><code>&lt;div id=&quot;counter-event-example&quot;&gt;
+  &lt;p&gt;{ { total }}&lt;/p&gt;
+  &lt;button-counter v-on:increment=&quot;incrementTotal&quot;&gt;&lt;/button-counter&gt;
+  &lt;button-counter v-on:increment=&quot;incrementTotal&quot;&gt;&lt;/button-counter&gt;
+&lt;/div&gt;
+
+
+Vue.component(&apos;button-counter&apos;, {
+  template: &apos;&lt;button v-on:click=&quot;incrementCounter&quot;&gt;{ { counter }}&lt;/button&gt;&apos;,
+  data: function () {
+    return {
+      counter: 0
+    }
+  },
+  methods: {
+    incrementCounter: function () {
+      this.counter += 1
+      this.$emit(&apos;increment&apos;)
+    }
+  },
+})
+
+new Vue({
+  el: &apos;#counter-event-example&apos;,
+  data: {
+    total: 0
+  },
+  methods: {
+    incrementTotal: function () {
+      this.total += 1
+    }
+  }
+})
+</code></pre><p>使用上，通过在父组件内子组件上使用<code>v-on:eventName=parentMethod</code>,子组件内部通过原生（或自定义）事件触发<code>this.$emit(&#39;eventName&#39;)</code>来执行父组件的<code>parentMethod</code>实现方法的联动。</p>
+<h3 id="给组件绑定原生事件"><a href="#给组件绑定原生事件" class="headerlink" title="给组件绑定原生事件"></a>给组件绑定原生事件</h3><p>如果在自定义组件上想绑定原生事件，通过<code>.native</code>来绑定。</p>
+<pre><code>&lt;my-component v-on:click.native=&quot;doTheThing&quot;&gt;&lt;/my-component&gt;
+</code></pre><h3 id="sync修饰符"><a href="#sync修饰符" class="headerlink" title="sync修饰符"></a>sync修饰符</h3><p>不考虑老版本问题，</p>
+<pre><code>&lt;comp :foo.sync=&quot;bar&quot;&gt;&lt;/comp&gt;
+</code></pre><p>相当于</p>
+<pre><code>&lt;comp :foo=&quot;bar&quot; @update:foo=&quot;val =&gt; bar = val&quot;&gt;&lt;/comp&gt;
+</code></pre><p>联合<code>v-bind</code>指令使用，可使用一个对象一次性设置多个属性</p>
+<pre><code>&lt;comp v-bind.sync=&quot;{ foo: 1, bar: 2 }&quot;&gt;&lt;/comp&gt;
+</code></pre><h3 id="使用自定义事件的表单输入组件"><a href="#使用自定义事件的表单输入组件" class="headerlink" title="使用自定义事件的表单输入组件"></a>使用自定义事件的表单输入组件</h3><p><code>v-model</code>指令使数据实现双向绑定，可以用其他组合指令达到同样效果</p>
+<pre><code>&lt;input v-model=&quot;something&quot;&gt;
+</code></pre><p>与下面写法等效：</p>
+<pre><code>&lt;input
+  v-bind:value=&quot;something&quot;
+  v-on:input=&quot;something = $event.target.value&quot;&gt;
+</code></pre><h3 id="自定义组件的-v-model"><a href="#自定义组件的-v-model" class="headerlink" title="自定义组件的 v-model"></a>自定义组件的 v-model</h3><p>2.2.0 新增 默认情况下，一个组件的 v-model 会使用 value prop 和 input 事件。但是诸如单选框、复选框之类的输入类型可能把 value 用作了别的目的。model 选项可以避免这样的冲突：</p>
+<pre><code>Vue.component(&apos;my-checkbox&apos;, {
+  model: {
+    //声明prop代替value的绑定，解放value，
+    prop: &apos;checked&apos;,
+    event: &apos;change&apos;
+  },
+  props: {
+    checked: Boolean,
+    // 这样就允许拿 `value` 这个 prop 做其它事了,就是在props内声明value，
+    value: String
+  },
+  // ...
+})
+
+
+&lt;my-checkbox v-model=&quot;foo&quot; value=&quot;some value&quot;&gt;&lt;/my-checkbox&gt;
+</code></pre><p>上述代码等价于：</p>
+<pre><code>&lt;my-checkbox
+  :checked=&quot;foo&quot;
+  @change=&quot;val =&gt; { foo = val }&quot;
+  value=&quot;some value&quot;&gt;
+&lt;/my-checkbox&gt;
+</code></pre><h3 id="非父子组件的通信"><a href="#非父子组件的通信" class="headerlink" title="非父子组件的通信"></a>非父子组件的通信</h3><p>非父子组件的通信一般利用第三方组件利用<code>$emit</code>,<code>$on</code>来联系组件， [!] 文档写得太简略了吧，不过如果引入vuex后，这个就是vuex解决的问题了</p>
+<h2 id="使用插槽分发内容"><a href="#使用插槽分发内容" class="headerlink" title="使用插槽分发内容"></a>使用插槽分发内容</h2><p>主要讲明，组件组合使用的注意事项。</p>
+<h3 id="编译作用域"><a href="#编译作用域" class="headerlink" title="编译作用域"></a>编译作用域</h3><p>就一句话，父组件模板的内容在父组件作用域内编译；子组件模板的内容在子组件作用域内编译。</p>
+<h3 id="slot插槽"><a href="#slot插槽" class="headerlink" title="slot插槽"></a><code>slot</code>插槽</h3><p><code>slot</code>就是用来作为插槽使用，如果<code>slot</code>只有一个，组件内部的元素都会丢到slot里面， 如果slot带有name，则对应元素会放到对应slot中， 例如，假定我们有一个 app-layout 组件，它的模板为：</p>
+<pre><code>&lt;div class=&quot;container&quot;&gt;
+  &lt;header&gt;
+    &lt;slot name=&quot;header&quot;&gt;&lt;/slot&gt;
+  &lt;/header&gt;
+  &lt;main&gt;
+    &lt;slot&gt;&lt;/slot&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;
+    &lt;slot name=&quot;footer&quot;&gt;&lt;/slot&gt;
+  &lt;/footer&gt;
+&lt;/div&gt;
+</code></pre><p>父组件模板：</p>
+<pre><code>&lt;app-layout&gt;
+  &lt;h1 slot=&quot;header&quot;&gt;这里可能是一个页面标题&lt;/h1&gt;
+
+  &lt;p&gt;主要内容的一个段落。&lt;/p&gt;
+  &lt;p&gt;另一个主要段落。&lt;/p&gt;
+
+  &lt;p slot=&quot;footer&quot;&gt;这里有一些联系信息&lt;/p&gt;
+&lt;/app-layout&gt;
+</code></pre><p>渲染结果为：</p>
+<pre><code>&lt;div class=&quot;container&quot;&gt;
+  &lt;header&gt;
+    &lt;h1&gt;这里可能是一个页面标题&lt;/h1&gt;
+  &lt;/header&gt;
+  &lt;main&gt;
+    &lt;p&gt;主要内容的一个段落。&lt;/p&gt;
+    &lt;p&gt;另一个主要段落。&lt;/p&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;
+    &lt;p&gt;这里有一些联系信息&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/div&gt;
+</code></pre><h3 id="作用域插槽"><a href="#作用域插槽" class="headerlink" title="作用域插槽"></a>作用域插槽</h3><p>2.1.0 新增 作用域插槽是一种特殊类型的插槽，用作一个 (能被传递数据的) 可重用模板，来代替已经渲染好的元素。 在子组件中，只需将数据传递到插槽，就像你将 prop 传递给组件一样：</p>
+<pre><code>&lt;div class=&quot;child&quot;&gt;
+  &lt;slot text=&quot;hello from child&quot;&gt;&lt;/slot&gt;
+&lt;/div&gt;
+</code></pre><p>在父级中，具有特殊特性 slot-scope 的 <code>&lt;template&gt;</code> 元素必须存在，表示它是作用域插槽的模板。slot-scope 的值将被用作一个临时变量名，此变量接收从子组件传递过来的 prop 对象：</p>
+<pre><code>&lt;div class=&quot;parent&quot;&gt;
+  &lt;child&gt;
+    &lt;template slot-scope=&quot;props&quot;&gt;
+      &lt;span&gt;hello from parent&lt;/span&gt;
+      &lt;span&gt;{ { props.text }}&lt;/span&gt;
+    &lt;/template&gt;
+  &lt;/child&gt;
+&lt;/div&gt;
+</code></pre><p>如果我们渲染上述模板，得到的输出会是：</p>
+<pre><code>&lt;div class=&quot;parent&quot;&gt;
+  &lt;div class=&quot;child&quot;&gt;
+    &lt;span&gt;hello from parent&lt;/span&gt;
+    &lt;span&gt;hello from child&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre><p>在 2.5.0+，slot-scope 能被用在任意元素或组件中而不再局限于 <code>&lt;template&gt;</code>。 作用域插槽更典型的用例是在列表组件中，允许使用者自定义如何渲染列表的每一项：</p>
+<pre><code>&lt;my-awesome-list :items=&quot;items&quot;&gt;
+  &lt;!-- 作用域插槽也可以是具名的 --&gt;
+  &lt;li
+    slot=&quot;item&quot;
+    slot-scope=&quot;props&quot;
+    class=&quot;my-fancy-item&quot;&gt;
+    { { props.text }}
+  &lt;/li&gt;
+&lt;/my-awesome-list&gt;
+</code></pre><p>列表组件的模板：</p>
+<pre><code>&lt;ul&gt;
+  &lt;slot name=&quot;item&quot;
+    v-for=&quot;item in items&quot;
+    :text=&quot;item.text&quot;&gt;
+    &lt;!-- 这里写入备用内容 --&gt;
+  &lt;/slot&gt;
+&lt;/ul&gt;
+</code></pre><h2 id="动态组件"><a href="#动态组件" class="headerlink" title="动态组件"></a>动态组件</h2><p>通过使用保留的 <code>&lt;component&gt;</code> 元素，并对其 is 特性进行动态绑定，你可以在同一个挂载点动态切换多个组件：</p>
+<pre><code>var vm = new Vue({
+  el: &apos;#example&apos;,
+  data: {
+    currentView: &apos;home&apos;
+  },
+  components: {
+    home: { /* ... */ },
+    posts: { /* ... */ },
+    archive: { /* ... */ }
+  }
+})
+
+
+&lt;component v-bind:is=&quot;currentView&quot;&gt;
+  &lt;!-- 组件在 vm.currentview 变化时改变！ --&gt;
+&lt;/component&gt;
+</code></pre><p>也可以直接绑定到组件对象上：</p>
+<pre><code>var Home = {
+  template: &apos;&lt;p&gt;Welcome home!&lt;/p&gt;&apos;
+}
+
+var vm = new Vue({
+  el: &apos;#example&apos;,
+  data: {
+    currentView: Home
+  }
+})
+</code></pre><h3 id="keep-alive"><a href="#keep-alive" class="headerlink" title="keep-alive"></a>keep-alive</h3><p>如果把切换出去的组件保留在内存中，可以保留它的状态或避免重新渲染。为此可以添加一个 keep-alive 指令参数：</p>
+<pre><code>&lt;keep-alive&gt;
+  &lt;component :is=&quot;currentView&quot;&gt;
+    &lt;!-- 非活动组件将被缓存！ --&gt;
+  &lt;/component&gt;
+&lt;/keep-alive&gt;
+</code></pre><h2 id="子组件引用"><a href="#子组件引用" class="headerlink" title="子组件引用"></a>子组件引用</h2><p>使用 ref 为子组件指定一个引用 ID,能在js中访问子组件实例。例如：</p>
+<pre><code>&lt;div id=&quot;parent&quot;&gt;
+  &lt;user-profile ref=&quot;profile&quot;&gt;&lt;/user-profile&gt;
+&lt;/div&gt;
+
+
+var parent = new Vue({ el: &apos;#parent&apos; })
+// 访问子组件实例
+var child = parent.$refs.profile
+</code></pre><p>当 ref 和 v-for 一起使用时，获取到的引用会是一个数组，包含和循环数据源对应的子组件。</p>
+<h2 id="异步组件"><a href="#异步组件" class="headerlink" title="异步组件"></a>异步组件</h2><p>提高性能的一种方法，但是新手项目不大的情况下，一般用不到。文档推荐配合webpack使用。注意webpack版本。</p>
+<pre><code>new Vue({
+  // ...
+  components: {
+    &apos;my-component&apos;: () =&gt; import(&apos;./my-async-component&apos;)
+  }
+})
+</code></pre><h2 id="高级异步组件"><a href="#高级异步组件" class="headerlink" title="高级异步组件"></a>高级异步组件</h2><p>2.3.0 新增 自 2.3.0 起，异步组件的工厂函数也可以返回一个如下的对象：</p>
+<pre><code>const AsyncComp = () =&gt; ({
+  // 需要加载的组件。应当是一个 Promise
+  component: import(&apos;./MyComp.vue&apos;),
+  // 加载中应当渲染的组件
+  loading: LoadingComp,
+  // 出错时渲染的组件
+  error: ErrorComp,
+  // 渲染加载中组件前的等待时间。默认：200ms。
+  delay: 200,
+  // 最长等待时间。超出此时间则渲染错误组件。默认：Infinity
+  timeout: 3000
+})
+</code></pre><p>路由组件中使用上述写法，需要使用 vue-router 2.4.0 以上的版本.</p>
+<h2 id="组件命名约定"><a href="#组件命名约定" class="headerlink" title="组件命名约定"></a>组件命名约定</h2><pre><code>// 在组件定义中
+components: {
+  // 使用 kebab-case 注册
+  &apos;kebab-cased-component&apos;: { /* ... */ },
+  // 使用 camelCase 注册
+  &apos;camelCasedComponent&apos;: { /* ... */ },
+  // 使用 PascalCase 注册
+  &apos;PascalCasedComponent&apos;: { /* ... */ }
+}
+</code></pre><p>PascalCase 是最通用的声明约定, kebab-case 是最通用的使用约定。 就是说声明统一用PascalCase，使用统一用kebab-case，尽管其他某些组合也可以，但没必要去记住啊。都可以的情况下，记一种通用不会错的就好。 字符串模板还支持自闭合标签，DOM就别想啦</p>
+<h1 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h1><h2 id="递归组件"><a href="#递归组件" class="headerlink" title="递归组件"></a>递归组件</h2><p>组件是可以递归的，但是要注意必须有跳出循环的控制，例如<code>v-if</code>；</p>
+<h2 id="组件间的循环引用"><a href="#组件间的循环引用" class="headerlink" title="组件间的循环引用"></a>组件间的循环引用</h2><p>避免使用这种就好，虽然有解决方案，但是就像上面递归组件一样，总有这种循环引用总有一个最先被引用的组件，如果搞不清，就别用。</p>
+<h2 id="内联模板，X-Template"><a href="#内联模板，X-Template" class="headerlink" title="内联模板，X-Template"></a>内联模板，X-Template</h2><p>使用<code>.vue</code>文件代替吧，不是一定要用，用了还有明显负面效果的东西，不用就好。</p>
+<h2 id="对低开销的静态组件使用-v-once"><a href="#对低开销的静态组件使用-v-once" class="headerlink" title="对低开销的静态组件使用 v-once"></a>对低开销的静态组件使用 v-once</h2><p>静态组件，就是指不需要监听什么事件、内容很少重复渲染的组件。对这类组件，使用<code>v-once</code>可以降低开销，</p>
+<pre><code>Vue.component(&apos;terms-of-service&apos;, {
+  template: &apos;\
+    &lt;div v-once&gt;\
+      &lt;h1&gt;Terms of Service&lt;/h1&gt;\
+      ...很多静态内容...\
+    &lt;/div&gt;\
+  &apos;
+})
+</code></pre>
+          
+            <div>广告位招租</div>
+          
+          <hr>
+          <ul class="pager">
+              
+              <li class="previous">
+                  <a href="/2018/03/13/vue-e5-85-a5-e9-97-a8-e7-ac-94-e8-ae-b0-ef-bc-88-e4-b8-83-ef-bc-89/" data-toggle="tooltip" data-placement="left"
+                     title="vue入门笔记（七）">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/2018/03/12/vue-e5-85-a5-e9-97-a8-e7-ac-94-e8-ae-b0-ef-bc-88-e5-9b-9b-ef-bc-89/" data-toggle="tooltip" data-placement="top"
+                     title="vue入门笔记（四）">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+        
+  <br>
+  
+
+  
+  </div>
+
+
+        
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#组件（下）"><span class="toc-number">1.</span> <span class="toc-text">组件（下）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义事件"><span class="toc-number">1.1.</span> <span class="toc-text">自定义事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#给组件绑定原生事件"><span class="toc-number">1.1.1.</span> <span class="toc-text">给组件绑定原生事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sync修饰符"><span class="toc-number">1.1.2.</span> <span class="toc-text">sync修饰符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用自定义事件的表单输入组件"><span class="toc-number">1.1.3.</span> <span class="toc-text">使用自定义事件的表单输入组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自定义组件的-v-model"><span class="toc-number">1.1.4.</span> <span class="toc-text">自定义组件的 v-model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非父子组件的通信"><span class="toc-number">1.1.5.</span> <span class="toc-text">非父子组件的通信</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用插槽分发内容"><span class="toc-number">1.2.</span> <span class="toc-text">使用插槽分发内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#编译作用域"><span class="toc-number">1.2.1.</span> <span class="toc-text">编译作用域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#slot插槽"><span class="toc-number">1.2.2.</span> <span class="toc-text">slot插槽</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#作用域插槽"><span class="toc-number">1.2.3.</span> <span class="toc-text">作用域插槽</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态组件"><span class="toc-number">1.3.</span> <span class="toc-text">动态组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#keep-alive"><span class="toc-number">1.3.1.</span> <span class="toc-text">keep-alive</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#子组件引用"><span class="toc-number">1.4.</span> <span class="toc-text">子组件引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异步组件"><span class="toc-number">1.5.</span> <span class="toc-text">异步组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高级异步组件"><span class="toc-number">1.6.</span> <span class="toc-text">高级异步组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#组件命名约定"><span class="toc-number">1.7.</span> <span class="toc-text">组件命名约定</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#杂项"><span class="toc-number">2.</span> <span class="toc-text">杂项</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#递归组件"><span class="toc-number">2.1.</span> <span class="toc-text">递归组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#组件间的循环引用"><span class="toc-number">2.2.</span> <span class="toc-text">组件间的循环引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内联模板，X-Template"><span class="toc-number">2.3.</span> <span class="toc-text">内联模板，X-Template</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对低开销的静态组件使用-v-once"><span class="toc-number">2.4.</span> <span class="toc-text">对低开销的静态组件使用 v-once</span></a></li></ol></li></ol>
+        
+    </div>
+  </div>
+
+
+      </div>
+  </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer>
+    <div class="text-center">
+      <ul class="list-inline">
+          
+              <li>
+                  <a href="/atom.xml" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+          
+          
+
+          
+
+          
+
+          
+              <li>
+                  <a target="_blank"  href="https://github.com/melorzhang">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+          
+
+          
+              <li>
+                  <a href="mailto:497112718@qq.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+      </ul>
+     <div class="text-muted copyright">
+            &copy;
+            
+              2018
+            
+            
+              <i class="fa fa-heart"></i>
+            
+            Melor
+        <br>
+          
+          
+          
+          
+      </div>
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

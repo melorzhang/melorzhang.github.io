@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="一个基于前端，配合node的学习路线">
+    <meta name="author" content="Melor">
+    <meta name="keyword" content="全栈技术">
+    <link rel="canonical" href="http://yoursite.com/2017/12/27/mongodbnode-e5-ae-9e-e7-8e-b0-e7-ae-80-e5-8d-95crud-e6-93-8d-e4-bd-9c/">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="alternate" type="application/atom+xml" title="&lt;div&gt;Melor&#39;s Blog&lt;/div&gt;" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <title>
+        
+        mongodb+node实现简单crud操作｜Melor的博客
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/main.css">
+
+    
+      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/css/highlight.css">
+    
+
+    
+
+
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- user customization -->
+    <link rel="stylesheet" href="/css/arsnippet.css">
+    <script src="/js/arsnippet.css.js"></script>
+</head>
+
+<style>
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/">
+            <div>Melor's Blog</div>
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/">首页</a>
+                </li>
+              
+                <li>
+                  <a href="/archives/">博文列表</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/images/default_bg.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>mongodb+node实现简单crud操作</h1>
+                        
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Melor</span>
+                               <span class="meta-item">Date: 2017-12-27</span>
+                               
+                                 <span class="meta-item">Updated On: 2018-09-13</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/categories/#mongodb"
+                                 title="mongodb">mongodb</a>
+                              
+                              <a class="tag" href="/categories/#技术分享"
+                                 title="技术分享">技术分享</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <div>什么都懂一点，生活更美好一些</div>
+          <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol>
+<li>安装node</li>
+<li>安装mongodb并运行 &gt; 因为最终是通过运行在node上的js去控制mongodb，所以不管你是windows还是linux，后面的步骤其实是一样的，只要选择自己对应操作系统安装即可。配置自动运行方法： 在类似‘C:\Program Files\MongoDB\Server\3.6’目录下，新建一个命名为mongod.cfg； 写入内容 systemLog: destination: file path: c:\M_LOG\mongod.log storage: dbPath: c:\M_DB 保存，不能保存自行搜索解决方法。两个目录需要自己先新建好，文档不用 命令行运行 “C:\Program Files\MongoDB\Server\3.6\bin\mongod.exe” –config “C:\Program Files\MongoDB\Server\3.6\mongod.cfg” –install<br>路径自行解决，官方文档（2017.12.27）还写着3.4，这里改过来了 命令行运行 net start MongoDB</li>
+<li>搭建项目，使用命令行 > mkdir myproject cd myproject npm init -y npm install mongodb assert –save 在myproject目录下新建一个app.js</li>
+<li>如果需要可视化观察mongodb数据变化，你可以使用默认一起安装的MongoDB Compass，直接运行程序，点击右下角connect按钮链接默认数据库即可。</li>
+</ol>
+<p>以上，准备工作算是完成了</p>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>命令行定向到myproject目录下，更新app.js后，命令行运行<code>node app.js</code>，即可执行对应操作。每个app.js是独立文件，不存在追加的问题！</p>
+<h3 id="链接数据库"><a href="#链接数据库" class="headerlink" title="链接数据库"></a>链接数据库</h3><pre><code>const MongoClient = require(&apos;mongodb&apos;).MongoClient;
+const assert = require(&apos;assert&apos;);//断言库,api参考(https://www.npmjs.com/package/assert)
+
+// Connection URL，默认端口，可以按照文档设置，
+const url = &apos;mongodb://localhost:27017&apos;;
+
+// Database Name,如果没有会自动创建，
+const dbName = &apos;myproject&apos;;
+
+// Use connect method to connect to the server、后面所有操作都会在下面这个结构里进行。
+MongoClient.connect(url, function(err, client) {
+    assert.equal(null, err);//判断错误是否为空。
+    console.log(&quot;成功链接到数据库&quot;);
+
+    const db = client.db(dbName);//指定数据库名
+
+    client.close();//关闭链接
+});
+</code></pre><h3 id="插入记录"><a href="#插入记录" class="headerlink" title="插入记录"></a>插入记录</h3><pre><code>const insertDocuments = function(db, callback) {
+    // Get the documents collection
+    const collection = db.collection(&apos;documents&apos;);
+    // Insert some documents
+    collection.insertMany([
+        {a : 1}, {a : 2}, {a : 3}
+    ], function(err, result) {
+        assert.equal(err, null);
+        assert.equal(3, result.result.n);
+        assert.equal(3, result.ops.length);
+        console.log(&quot;Inserted 3 documents into the collection&quot;);
+        callback(result);
+    });
+};
+const MongoClient = require(&apos;mongodb&apos;).MongoClient;
+const assert = require(&apos;assert&apos;);//断言库,api参考(https://www.npmjs.com/package/assert)
+
+// Connection URL，默认端口，可以按照文档设置，
+const url = &apos;mongodb://localhost:27017&apos;;
+
+// Database Name,如果没有会自动创建，
+const dbName = &apos;myproject&apos;;
+
+// Use connect method to connect to the server、后面所有操作都会在下面这个结构里进行。
+MongoClient.connect(url, function(err, client) {
+    assert.equal(null, err);//判断错误是否为空。
+    console.log(&quot;成功链接到数据库&quot;);
+
+    const db = client.db(dbName);//指定数据库名
+    insertDocuments(db, function(res) {
+        //这里res会传入callback
+        client.close();
+      });
+});
+</code></pre><h3 id="更新记录"><a href="#更新记录" class="headerlink" title="更新记录"></a>更新记录</h3><p>这里默认你已经运行过插入记录的命令，即你的数据库里现在是有数据的</p>
+<pre><code>const updateDocument = function(db, callback) {
+    // Get the documents collection
+    const collection = db.collection(&apos;documents&apos;);
+    // Update document where a is 2, set b equal to 1，updateOne只更新一条，更新多条用updateMany。
+    collection.updateOne({ a : 2 }
+        , { $set: { b : 1 } }, function(err, result) {
+            assert.equal(err, null);
+            assert.equal(1, result.result.n);
+            console.log(&quot;Updated the document with the field a equal to 2&quot;);
+            callback(result);
+        });
+};
+const MongoClient = require(&apos;mongodb&apos;).MongoClient;
+const assert = require(&apos;assert&apos;);//断言库,api参考(https://www.npmjs.com/package/assert)
+
+// Connection URL，默认端口，可以按照文档设置，
+const url = &apos;mongodb://localhost:27017&apos;;
+
+// Database Name,如果没有会自动创建，
+const dbName = &apos;myproject&apos;;
+
+// Use connect method to connect to the server、后面所有操作都会在下面这个结构里进行。
+MongoClient.connect(url, function(err, client) {
+    assert.equal(null, err);//判断错误是否为空。
+    console.log(&quot;成功链接到数据库&quot;);
+
+    const db = client.db(dbName);//指定数据库名
+    updateDocument(db, function() {
+        client.close();
+    });
+});
+</code></pre><h3 id="删除记录"><a href="#删除记录" class="headerlink" title="删除记录"></a>删除记录</h3><p>这里默认你已经运行过插入记录的命令，即你的数据库里现在是有数据的</p>
+<pre><code>const removeDocument = function(db, callback) {
+    // Get the documents collection
+    const collection = db.collection(&apos;documents&apos;);
+    // Delete document where a is 3，这里同样deleteOne是只删除一条，
+    collection.deleteOne({ a : 3 }, function(err, result) {
+        assert.equal(err, null);
+        assert.equal(1, result.result.n);
+        console.log(&quot;Removed the document with the field a equal to 3&quot;);
+        callback(result);
+    });
+};
+const MongoClient = require(&apos;mongodb&apos;).MongoClient;
+const assert = require(&apos;assert&apos;);//断言库,api参考(https://www.npmjs.com/package/assert)
+
+// Connection URL，默认端口，可以按照文档设置，
+const url = &apos;mongodb://localhost:27017&apos;;
+
+// Database Name,如果没有会自动创建，
+const dbName = &apos;myproject&apos;;
+
+// Use connect method to connect to the server、后面所有操作都会在下面这个结构里进行。
+MongoClient.connect(url, function(err, client) {
+    assert.equal(null, err);//判断错误是否为空。
+    console.log(&quot;成功链接到数据库&quot;);
+
+    const db = client.db(dbName);//指定数据库名
+    removeDocument(db, function() {
+        client.close();
+    });
+});
+</code></pre><h3 id="查记录"><a href="#查记录" class="headerlink" title="查记录"></a>查记录</h3><p>这里默认你已经运行过插入记录的命令，即你的数据库里现在是有数据的</p>
+<pre><code>const findDocuments = function(db, callback) {
+    // Get the documents collection
+    const collection = db.collection(&apos;documents&apos;);
+    // Find some documents，find传入对象是筛选条件，如果想查，可以用find({&apos;a&apos;:3})来查相关数据。
+    collection.find({}).toArray(function(err, docs) {
+        assert.equal(err, null);
+        console.log(&quot;Found the following records&quot;);
+        console.log(docs)
+        callback(docs);
+    });
+};
+const MongoClient = require(&apos;mongodb&apos;).MongoClient;
+const assert = require(&apos;assert&apos;);//断言库,api参考(https://www.npmjs.com/package/assert)
+
+// Connection URL，默认端口，可以按照文档设置，
+const url = &apos;mongodb://localhost:27017&apos;;
+
+// Database Name,如果没有会自动创建，
+const dbName = &apos;myproject&apos;;
+
+// Use connect method to connect to the server、后面所有操作都会在下面这个结构里进行。
+MongoClient.connect(url, function(err, client) {
+    assert.equal(null, err);//判断错误是否为空。
+    console.log(&quot;成功链接到数据库&quot;);
+
+    const db = client.db(dbName);//指定数据库名
+    findDocuments(db, function(res) {
+        //这里res会传入callback
+        client.close();
+    });
+});
+</code></pre><p>以上是本文全部内容 注意由于版本更新，查询api要看新的<a href="https://github.com/mongodb/node-mongodb-native/blob/HEAD/CHANGES_3.0.0.md" target="_blank" rel="noopener">api文档</a> <a href="https://www.npmjs.com/package/mongodb" target="_blank" rel="noopener">参考文章</a></p>
+
+          
+            <div>广告位招租</div>
+          
+          <hr>
+          <ul class="pager">
+              
+              <li class="previous">
+                  <a href="/2017/12/29/e5-ae-89-e5-88-a9-e4-b8-80-e6-ac-be-e5-af-8c-e6-96-87-e6-9c-ac-e7-bc-96-e8-be-91-e5-99-a8-ef-bc-9awangeditor/" data-toggle="tooltip" data-placement="left"
+                     title="安利一款富文本编辑器：wangEditor">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/2017/12/27/repeating-linear-gradient-e5-ae-9e-e7-8e-b0-e8-99-9a-e7-ba-bf-e8-be-b9-e6-a1-86-e7-ba-bf/" data-toggle="tooltip" data-placement="top"
+                     title="repeating-linear-gradient 实现虚线边框线">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+        
+  <br>
+  
+
+  
+  </div>
+
+
+        
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-number">1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#正文"><span class="toc-number">2.</span> <span class="toc-text">正文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#链接数据库"><span class="toc-number">2.1.</span> <span class="toc-text">链接数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#插入记录"><span class="toc-number">2.2.</span> <span class="toc-text">插入记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更新记录"><span class="toc-number">2.3.</span> <span class="toc-text">更新记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除记录"><span class="toc-number">2.4.</span> <span class="toc-text">删除记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查记录"><span class="toc-number">2.5.</span> <span class="toc-text">查记录</span></a></li></ol></li></ol>
+        
+    </div>
+  </div>
+
+
+      </div>
+  </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer>
+    <div class="text-center">
+      <ul class="list-inline">
+          
+              <li>
+                  <a href="/atom.xml" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+          
+          
+
+          
+
+          
+
+          
+              <li>
+                  <a target="_blank"  href="https://github.com/melorzhang">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+          
+
+          
+              <li>
+                  <a href="mailto:497112718@qq.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+      </ul>
+     <div class="text-muted copyright">
+            &copy;
+            
+              2018
+            
+            
+              <i class="fa fa-heart"></i>
+            
+            Melor
+        <br>
+          
+          
+          
+          
+      </div>
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

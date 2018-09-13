@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="一个基于前端，配合node的学习路线">
+    <meta name="author" content="Melor">
+    <meta name="keyword" content="全栈技术">
+    <link rel="canonical" href="http://yoursite.com/2018/03/09/vue-e5-85-a5-e9-97-a8-e7-ac-94-e8-ae-b0-ef-bc-88-e4-b8-89-ef-bc-89/">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="alternate" type="application/atom+xml" title="&lt;div&gt;Melor&#39;s Blog&lt;/div&gt;" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <title>
+        
+        vue入门笔记（三）｜Melor的博客
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/main.css">
+
+    
+      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/css/highlight.css">
+    
+
+    
+
+
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- user customization -->
+    <link rel="stylesheet" href="/css/arsnippet.css">
+    <script src="/js/arsnippet.css.js"></script>
+</head>
+
+<style>
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/">
+            <div>Melor's Blog</div>
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/">首页</a>
+                </li>
+              
+                <li>
+                  <a href="/archives/">博文列表</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/images/default_bg.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>vue入门笔记（三）</h1>
+                        
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Melor</span>
+                               <span class="meta-item">Date: 2018-03-09</span>
+                               
+                                 <span class="meta-item">Updated On: 2018-09-13</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/categories/#vue相关"
+                                 title="vue相关">vue相关</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <div>什么都懂一点，生活更美好一些</div>
+          <h1 id="表单输入绑定"><a href="#表单输入绑定" class="headerlink" title="表单输入绑定"></a>表单输入绑定</h1><p>基础用法 你可以用 v-model 指令在表单 <code>&lt;input&gt;</code> 及 <code>&lt;textarea&gt;</code> 元素上创建双向数据绑定。它会根据控件类型自动选取正确的方法来更新元素。尽管有些神奇，但 v-model 本质上不过是语法糖。它负责监听用户的输入事件以更新数据，并对一些极端场景进行一些特殊处理。 v-model 会忽略所有表单元素的 value、checked、selected 特性的初始值而总是将 Vue 实例的数据作为数据来源。你应该通过 JavaScript 在组件的 data 选项中声明初始值。 对于需要使用输入法 (如中文、日文、韩文等) 的语言，你会发现 v-model 不会在输入法组合文字过程中得到更新。如果你也想处理这个过程，请使用 input 事件。</p>
+<h2 id="文本"><a href="#文本" class="headerlink" title="文本"></a>文本</h2><pre><code>&lt;input v-model=&quot;message&quot; placeholder=&quot;edit me&quot;&gt;
+&lt;p&gt;Message is: { { message }}&lt;/p&gt;
+</code></pre><h2 id="多行文本"><a href="#多行文本" class="headerlink" title="多行文本"></a>多行文本</h2><pre><code>&lt;span&gt;Multiline message is:&lt;/span&gt;
+&lt;p style=&quot;white-space: pre-line;&quot;&gt;{ { message }}&lt;/p&gt;
+&lt;br&gt;
+&lt;textarea v-model=&quot;message&quot; placeholder=&quot;add multiple lines&quot;&gt;&lt;/textarea&gt;
+</code></pre><p>[!] 在文本区域插值 (<code>&lt;textarea&gt;&lt;/textarea&gt;</code>) 并不会生效，应用 v-model 来代替。</p>
+<h2 id="复选框"><a href="#复选框" class="headerlink" title="复选框"></a>复选框</h2><p>单个复选框，绑定到布尔值：</p>
+<pre><code>&lt;input type=&quot;checkbox&quot; id=&quot;checkbox&quot; v-model=&quot;checked&quot;&gt;
+&lt;label for=&quot;checkbox&quot;&gt;{ { checked }}&lt;/label&gt;
+</code></pre><p>多个复选框，绑定到同一个数组：</p>
+<pre><code>&lt;div id=&apos;example-3&apos;&gt;
+  &lt;input type=&quot;checkbox&quot; id=&quot;jack&quot; value=&quot;Jack&quot; v-model=&quot;checkedNames&quot;&gt;
+  &lt;label for=&quot;jack&quot;&gt;Jack&lt;/label&gt;
+  &lt;input type=&quot;checkbox&quot; id=&quot;john&quot; value=&quot;John&quot; v-model=&quot;checkedNames&quot;&gt;
+  &lt;label for=&quot;john&quot;&gt;John&lt;/label&gt;
+  &lt;input type=&quot;checkbox&quot; id=&quot;mike&quot; value=&quot;Mike&quot; v-model=&quot;checkedNames&quot;&gt;
+  &lt;label for=&quot;mike&quot;&gt;Mike&lt;/label&gt;
+  &lt;br&gt;
+  &lt;span&gt;Checked names: { { checkedNames }}&lt;/span&gt;
+&lt;/div&gt;
+
+
+new Vue({
+  el: &apos;#example-3&apos;,
+  data: {
+    checkedNames: []
+  }
+})
+</code></pre><h2 id="单选按钮"><a href="#单选按钮" class="headerlink" title="单选按钮"></a>单选按钮</h2><pre><code>&lt;div id=&quot;example-4&quot;&gt;
+  &lt;input type=&quot;radio&quot; id=&quot;one&quot; value=&quot;One&quot; v-model=&quot;picked&quot;&gt;
+  &lt;label for=&quot;one&quot;&gt;One&lt;/label&gt;
+  &lt;br&gt;
+  &lt;input type=&quot;radio&quot; id=&quot;two&quot; value=&quot;Two&quot; v-model=&quot;picked&quot;&gt;
+  &lt;label for=&quot;two&quot;&gt;Two&lt;/label&gt;
+  &lt;br&gt;
+  &lt;span&gt;Picked: { { picked }}&lt;/span&gt;
+&lt;/div&gt;
+
+
+new Vue({
+  el: &apos;#example-4&apos;,
+  data: {
+    picked: &apos;&apos;
+  }
+})
+</code></pre><h2 id="选择框"><a href="#选择框" class="headerlink" title="选择框"></a>选择框</h2><p>单选时：</p>
+<pre><code>&lt;div id=&quot;example-5&quot;&gt;
+  &lt;select v-model=&quot;selected&quot;&gt;
+    &lt;option disabled value=&quot;&quot;&gt;请选择&lt;/option&gt;
+    &lt;option&gt;A&lt;/option&gt;
+    &lt;option&gt;B&lt;/option&gt;
+    &lt;option&gt;C&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;span&gt;Selected: { { selected }}&lt;/span&gt;
+&lt;/div&gt;
+
+
+new Vue({
+  el: &apos;...&apos;,
+  data: {
+    selected: &apos;&apos;
+  }
+})
+</code></pre><p>如果 v-model 表达式的初始值未能匹配任何选项，<code>&lt;select&gt;</code> 元素将被渲染为“未选中”状态。在 iOS 中，这会使用户无法选择第一个选项。因为这样的情况下，iOS 不会触发 change 事件。因此，更推荐像上面这样提供一个值为空的禁用选项。 多选时 (绑定到一个数组)：</p>
+<pre><code>&lt;div id=&quot;example-6&quot;&gt;
+  &lt;select v-model=&quot;selected&quot; multiple style=&quot;width: 50px;&quot;&gt;
+    &lt;option&gt;A&lt;/option&gt;
+    &lt;option&gt;B&lt;/option&gt;
+    &lt;option&gt;C&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;br&gt;
+  &lt;span&gt;Selected: { { selected }}&lt;/span&gt;
+&lt;/div&gt;
+
+
+new Vue({
+  el: &apos;#example-6&apos;,
+  data: {
+    selected: []
+  }
+})
+</code></pre><p>用 v-for 渲染的动态选项：</p>
+<pre><code>&lt;select v-model=&quot;selected&quot;&gt;
+  &lt;option v-for=&quot;option in options&quot; v-bind:value=&quot;option.value&quot;&gt;
+    { { option.text }}
+  &lt;/option&gt;
+&lt;/select&gt;
+&lt;span&gt;Selected: { { selected }}&lt;/span&gt;
+
+
+new Vue({
+  el: &apos;...&apos;,
+  data: {
+    selected: &apos;A&apos;,
+    options: [
+      { text: &apos;One&apos;, value: &apos;A&apos; },
+      { text: &apos;Two&apos;, value: &apos;B&apos; },
+      { text: &apos;Three&apos;, value: &apos;C&apos; }
+    ]
+  }
+})
+</code></pre><h1 id="值绑定"><a href="#值绑定" class="headerlink" title="值绑定"></a>值绑定</h1><p>对于单选按钮，复选框及选择框的选项，v-model 绑定的值通常是静态字符串 (对于复选框也可以是布尔值)：</p>
+<pre><code>&lt;!-- 当选中时，`picked` 为字符串 &quot;a&quot; --&gt;
+&lt;input type=&quot;radio&quot; v-model=&quot;picked&quot; value=&quot;a&quot;&gt;
+
+&lt;!-- `toggle` 为 true 或 false --&gt;
+&lt;input type=&quot;checkbox&quot; v-model=&quot;toggle&quot;&gt;
+
+&lt;!-- 当选中第一个选项时，`selected` 为字符串 &quot;abc&quot; --&gt;
+&lt;select v-model=&quot;selected&quot;&gt;
+  &lt;option value=&quot;abc&quot;&gt;ABC&lt;/option&gt;
+&lt;/select&gt;
+</code></pre><p>但是有时我们可能想把值绑定到 Vue 实例的一个动态属性上，这时可以用 v-bind 实现，并且这个属性的值可以不是字符串。</p>
+<h2 id="复选框-1"><a href="#复选框-1" class="headerlink" title="复选框"></a>复选框</h2><pre><code>&lt;input
+  type=&quot;checkbox&quot;
+  v-model=&quot;toggle&quot;
+  true-value=&quot;yes&quot;
+  false-value=&quot;no&quot;
+&gt;
+
+
+// 当选中时
+vm.toggle === &apos;yes&apos;
+// 当没有选中时
+vm.toggle === &apos;no&apos;
+</code></pre><p>这里的 true-value 和 false-value 特性并不会影响输入控件的 value 特性，因为浏览器在提交表单时并不会包含未被选中的复选框。如果要确保表单中这两个值中的一个能够被提交，(比如“yes”或“no”)，请换用单选按钮。</p>
+<h2 id="单选按钮-1"><a href="#单选按钮-1" class="headerlink" title="单选按钮"></a>单选按钮</h2><pre><code>&lt;input type=&quot;radio&quot; v-model=&quot;pick&quot; v-bind:value=&quot;a&quot;&gt;
+
+
+// 当选中时
+vm.pick === vm.a
+</code></pre><p>选择框的选项</p>
+<pre><code>&lt;select v-model=&quot;selected&quot;&gt;
+    &lt;!-- 内联对象字面量 --&gt;
+  &lt;option v-bind:value=&quot;{ number: 123 }&quot;&gt;123&lt;/option&gt;
+&lt;/select&gt;
+
+
+// 当选中时
+typeof vm.selected // =&gt; &apos;object&apos;
+vm.selected.number // =&gt; 123
+</code></pre><h1 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h1><p><code>.lazy</code> 在默认情况下，v-model 在每次 input 事件触发后将输入框的值与数据进行同步 (除了上述输入法组合文字时)。你可以添加 lazy 修饰符，从而转变为使用 change 事件进行同步：</p>
+<pre><code>&lt;!-- 在“change”时而非“input”时更新 --&gt;
+&lt;input v-model.lazy=&quot;msg&quot; &gt;
+</code></pre><p><code>.number</code> 如果想自动将用户的输入值转为数值类型，可以给 v-model 添加 number 修饰符：</p>
+<pre><code>&lt;input v-model.number=&quot;age&quot; type=&quot;number&quot;&gt;
+</code></pre><p>这通常很有用，因为即使在 type=”number” 时，HTML 输入元素的值也总会返回字符串。 <code>.trim</code> 如果要自动过滤用户输入的首尾空白字符，可以给 v-model 添加 trim 修饰符：</p>
+<pre><code>&lt;input v-model.trim=&quot;msg&quot;&gt;
+</code></pre><h1 id="在组件上使用-v-model"><a href="#在组件上使用-v-model" class="headerlink" title="在组件上使用 v-model"></a>在组件上使用 v-model</h1><p>HTML 原生的输入元素类型并不总能满足需求。幸好，Vue 的组件系统允许你创建具有完全自定义行为且可复用的输入组件。这些输入组件甚至可以和 v-model 一起使用！ 本篇基本概念较多，没啥好说的。</p>
+
+          
+            <div>广告位招租</div>
+          
+          <hr>
+          <ul class="pager">
+              
+              <li class="previous">
+                  <a href="/2018/03/12/vue-e5-85-a5-e9-97-a8-e7-ac-94-e8-ae-b0-ef-bc-88-e5-9b-9b-ef-bc-89/" data-toggle="tooltip" data-placement="left"
+                     title="vue入门笔记（四）">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/2018/03/08/vue-e5-85-a5-e9-97-a8-e7-ac-94-e8-ae-b0-ef-bc-88-e4-ba-8c-ef-bc-89/" data-toggle="tooltip" data-placement="top"
+                     title="vue入门笔记（二）">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+        
+  <br>
+  
+
+  
+  </div>
+
+
+        
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#表单输入绑定"><span class="toc-number">1.</span> <span class="toc-text">表单输入绑定</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#文本"><span class="toc-number">1.1.</span> <span class="toc-text">文本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多行文本"><span class="toc-number">1.2.</span> <span class="toc-text">多行文本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复选框"><span class="toc-number">1.3.</span> <span class="toc-text">复选框</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单选按钮"><span class="toc-number">1.4.</span> <span class="toc-text">单选按钮</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#选择框"><span class="toc-number">1.5.</span> <span class="toc-text">选择框</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#值绑定"><span class="toc-number">2.</span> <span class="toc-text">值绑定</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#复选框-1"><span class="toc-number">2.1.</span> <span class="toc-text">复选框</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单选按钮-1"><span class="toc-number">2.2.</span> <span class="toc-text">单选按钮</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#修饰符"><span class="toc-number">3.</span> <span class="toc-text">修饰符</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在组件上使用-v-model"><span class="toc-number">4.</span> <span class="toc-text">在组件上使用 v-model</span></a></li></ol>
+        
+    </div>
+  </div>
+
+
+      </div>
+  </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer>
+    <div class="text-center">
+      <ul class="list-inline">
+          
+              <li>
+                  <a href="/atom.xml" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+          
+          
+
+          
+
+          
+
+          
+              <li>
+                  <a target="_blank"  href="https://github.com/melorzhang">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+          
+
+          
+              <li>
+                  <a href="mailto:497112718@qq.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+      </ul>
+     <div class="text-muted copyright">
+            &copy;
+            
+              2018
+            
+            
+              <i class="fa fa-heart"></i>
+            
+            Melor
+        <br>
+          
+          
+          
+          
+      </div>
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

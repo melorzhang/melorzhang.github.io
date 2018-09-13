@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="一个基于前端，配合node的学习路线">
+    <meta name="author" content="Melor">
+    <meta name="keyword" content="全栈技术">
+    <link rel="canonical" href="http://yoursite.com/2018/03/12/vue-e5-85-a5-e9-97-a8-e7-ac-94-e8-ae-b0-ef-bc-88-e5-9b-9b-ef-bc-89/">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="alternate" type="application/atom+xml" title="&lt;div&gt;Melor&#39;s Blog&lt;/div&gt;" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <title>
+        
+        vue入门笔记（四）｜Melor的博客
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/main.css">
+
+    
+      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/css/highlight.css">
+    
+
+    
+
+
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- user customization -->
+    <link rel="stylesheet" href="/css/arsnippet.css">
+    <script src="/js/arsnippet.css.js"></script>
+</head>
+
+<style>
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/">
+            <div>Melor's Blog</div>
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/">首页</a>
+                </li>
+              
+                <li>
+                  <a href="/archives/">博文列表</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/images/default_bg.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>vue入门笔记（四）</h1>
+                        
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Melor</span>
+                               <span class="meta-item">Date: 2018-03-12</span>
+                               
+                                 <span class="meta-item">Updated On: 2018-09-13</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/categories/#vue相关"
+                                 title="vue相关">vue相关</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <div>什么都懂一点，生活更美好一些</div>
+          <h1 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h1><p>本节主要记录组件的使用，也是vue最重要的一个环节，内容较多，可能会分割成两篇来写</p>
+<h2 id="使用组件"><a href="#使用组件" class="headerlink" title="使用组件"></a>使用组件</h2><h3 id="全局注册"><a href="#全局注册" class="headerlink" title="全局注册"></a>全局注册</h3><p>注册一个全局组件，可以使用 <code>Vue.component(tagName, options)</code>。例如：</p>
+<pre><code>Vue.component(&apos;my-component&apos;, {
+  // 选项
+})
+</code></pre><p>在实例化vue<strong>之前</strong>必须保证组件已经注册，</p>
+<pre><code>&lt;div id=&quot;example&quot;&gt;
+  &lt;my-component&gt;&lt;/my-component&gt;
+&lt;/div&gt;
+
+
+// 注册
+Vue.component(&apos;my-component&apos;, {
+  template: &apos;&lt;div&gt;A custom component!&lt;/div&gt;&apos;
+})
+
+// 创建根实例
+new Vue({
+  el: &apos;#example&apos;
+})
+</code></pre><h3 id="局部注册"><a href="#局部注册" class="headerlink" title="局部注册"></a>局部注册</h3><p>与全局注册相对，这样注册的组件只能在注册的作用域内使用，一般使用这种方法注册的情况更普遍</p>
+<pre><code>var Child = {
+  template: &apos;&lt;div&gt;A custom component!&lt;/div&gt;&apos;
+}
+
+new Vue({
+  // ...
+  components: {
+    // &lt;my-component&gt; 将只在父组件模板中可用
+    &apos;my-component&apos;: Child
+  }
+})
+</code></pre><h3 id="DOM-模板解析注意事项"><a href="#DOM-模板解析注意事项" class="headerlink" title="DOM 模板解析注意事项"></a>DOM 模板解析注意事项</h3><p>当使用 DOM 作为模板时 (例如，使用 el 选项来把 Vue 实例挂载到一个已有内容的元素上)，你会受到 HTML 本身的一些限制，因为 Vue 只有在浏览器解析、规范化模板之后才能获取其内容。尤其要注意，像 <code>&lt;ul&gt;</code>、<code>&lt;ol&gt;</code>、<code>&lt;table&gt;</code>、<code>&lt;select&gt;</code> 这样的元素里允许包含的元素有限制，而另一些像 这样的元素只能出现在某些特定元素的内部。 就是说，下面的写法会报错</p>
+<pre><code>&lt;table&gt;
+  &lt;my-row&gt;...&lt;/my-row&gt;
+&lt;/table&gt;
+</code></pre><p>为解决上面的问题，需要使用下面的写法，关键在于<code>is</code></p>
+<pre><code>&lt;table&gt;
+  &lt;tr is=&quot;my-row&quot;&gt;&lt;/tr&gt;
+&lt;/table&gt;
+</code></pre><p>但如果使用字符串模板，则没有上面的问题，所以一般情况下，使用字符串模板吧 1. <code>&lt;script type=&quot;text/x-template&quot;&gt;</code> 2. JavaScript 内联模板字符串 3. .vue 组件（最推荐的使用）</p>
+<h3 id="Vue实例中-data-必须是函数"><a href="#Vue实例中-data-必须是函数" class="headerlink" title="Vue实例中 data 必须是函数"></a>Vue实例中 data 必须是函数</h3><pre><code>&lt;div id=&quot;example-2&quot;&gt;
+  &lt;simple-counter&gt;&lt;/simple-counter&gt;
+  &lt;simple-counter&gt;&lt;/simple-counter&gt;
+  &lt;simple-counter&gt;&lt;/simple-counter&gt;
+&lt;/div&gt;
+
+
+var data = { counter: 0 }
+
+Vue.component(&apos;simple-counter&apos;, {
+  template: &apos;&lt;button v-on:click=&quot;counter += 1&quot;&gt;{ { counter }}&lt;/button&gt;&apos;,
+  // 技术上 data 的确是一个函数了，因此 Vue 不会警告，
+  // 但是我们却给每个组件实例返回了同一个对象的引用
+  data: function () {
+    return data//会使三个组件共享一个对象，如果不想这样，这里应该返回data的一份拷贝，Object.assign({},data)是其中一种解决方案；或者使用结构语法｛...data｝也可以，但注意，如果是深拷贝，应该注意对应事项.
+  }
+})
+
+new Vue({
+  el: &apos;#example-2&apos;
+})
+</code></pre><p><a href="https://www.zhihu.com/question/23031215" target="_blank" rel="noopener">js中的深拷贝（知乎）</a></p>
+<h2 id="组件组合"><a href="#组件组合" class="headerlink" title="组件组合"></a>组件组合</h2><p>在 Vue 中，父子组件的关系可以总结为 prop 向下传递，事件向上传递。父组件通过 prop 给子组件下发数据，子组件通过事件给父组件发送消息。看看它们是怎么工作的。</p>
+<h3 id="Prop"><a href="#Prop" class="headerlink" title="Prop"></a>Prop</h3><p>与react类似，prop只在当前组件内有效，子组件无法直接访问父组件的prop，父组件也无法直接获取子组件的prop。 子组件要显式地用 props 选项声明它预期的数据：</p>
+<pre><code>Vue.component(&apos;child&apos;, {
+  // 声明 props
+  props: [&apos;message&apos;],
+  // 就像 data 一样，prop 也可以在模板中使用
+  // 同样也可以在 vm 实例中通过 this.message 来使用
+  template: &apos;&lt;span&gt;{ { message }}&lt;/span&gt;&apos;
+})
+</code></pre><p>然后我们可以这样向它传入一个普通字符串：</p>
+<pre><code>&lt;child message=&quot;hello!&quot;&gt;&lt;/child&gt;
+</code></pre><p>受html解析机制，props中驼峰命名的属性需要转换为连缀才能使用</p>
+<pre><code>Vue.component(&apos;child&apos;, {
+  // 在 JavaScript 中使用 camelCase
+  props: [&apos;myMessage&apos;],
+  template: &apos;&lt;span&gt;{ { myMessage }}&lt;/span&gt;&apos;
+})
+
+
+&lt;!-- 在 HTML 中使用 kebab-case --&gt;
+&lt;child my-message=&quot;hello!&quot;&gt;&lt;/child&gt;
+</code></pre><p>但这些限制在字符串模板中不会出现。</p>
+<h3 id="动态-Prop"><a href="#动态-Prop" class="headerlink" title="动态 Prop"></a>动态 Prop</h3><p>与绑定到任何普通的 HTML 特性相类似，我们可以用 v-bind 来动态地将 prop 绑定到父组件的数据。每当父组件的数据变化时，该变化也会传导给子组件：</p>
+<pre><code>&lt;div id=&quot;prop-example-2&quot;&gt;
+  &lt;input v-model=&quot;parentMsg&quot;&gt;
+  &lt;br&gt;
+  &lt;child v-bind:my-message=&quot;parentMsg&quot;&gt;&lt;/child&gt;
+  &lt;!-- &lt;child :my-message=&quot;parentMsg&quot;&gt;&lt;/child&gt; --&gt;
+&lt;/div&gt;
+
+
+new Vue({
+  el: &apos;#prop-example-2&apos;,
+  data: {
+    parentMsg: &apos;Message from parent&apos;
+  }
+})
+</code></pre><p>如果不使用<code>:props-name</code>，直接对对象绑定，会自动解构，</p>
+<pre><code>todo: {
+  text: &apos;Learn Vue&apos;,
+  isComplete: false
+}
+</code></pre><p>然后：</p>
+<pre><code>&lt;todo-item v-bind=&quot;todo&quot;&gt;&lt;/todo-item&gt;
+</code></pre><p>将等价于：</p>
+<pre><code>&lt;todo-item
+  v-bind:text=&quot;todo.text&quot;
+  v-bind:is-complete=&quot;todo.isComplete&quot;
+&gt;&lt;/todo-item&gt;
+</code></pre><p>prop的值总是字面量，如果需要其他类型，需要使用<code>v-bind</code>指令绑定</p>
+<pre><code>&lt;!-- 传递了一个字符串 &quot;1&quot; --&gt;
+&lt;comp some-prop=&quot;1&quot;&gt;&lt;/comp&gt;
+&lt;!-- 传递真正的数值 --&gt;
+&lt;comp v-bind:some-prop=&quot;1&quot;&gt;&lt;/comp&gt;
+</code></pre><h3 id="单向数据流"><a href="#单向数据流" class="headerlink" title="单向数据流"></a>单向数据流</h3><p>与react中类似的，prop是对于子组件来说，不应该在其内部改变，改变应该放在父组件内进行， 而某些场合下，又不得不对其进行加工的话，可以使用下面两种方法修改， 1. 定义一个局部变量，并用 prop 的值初始化它：</p>
+<pre><code>props: [&apos;initialCounter&apos;],
+data: function () {
+  return { counter: this.initialCounter }
+}
+</code></pre><ol>
+<li><p>定义一个计算属性，处理 prop 的值并返回：</p>
+<p>props: [‘size’],<br>computed: {<br>  normalizedSize: function () {</p>
+<pre><code>return this.size.trim().toLowerCase()//对象或数组需要注意引用的问题，使用拷贝能解决大部分意外的发生
+</code></pre><p>  }<br>}</p>
+</li>
+</ol>
+<h3 id="Prop-验证"><a href="#Prop-验证" class="headerlink" title="Prop 验证"></a>Prop 验证</h3><p>类似于react中的PropTypes，vue也有自己的类型验证和默认值设置，</p>
+<pre><code>Vue.component(&apos;example&apos;, {
+  props: {
+    // 基础类型检测 (`null` 指允许任何类型)
+    propA: Number,
+    // 可能是多种类型
+    propB: [String, Number],
+    // 必传且是字符串
+    propC: {
+      type: String,
+      required: true
+    },
+    // 数值且有默认值
+    propD: {
+      type: Number,
+      default: 100
+    },
+    // 数组/对象的默认值应当由一个工厂函数返回
+    propE: {
+      type: Object,
+      default: function () {
+        return { message: &apos;hello&apos; }
+      }
+    },
+    // 自定义验证函数
+    propF: {
+      validator: function (value) {
+        return value &gt; 10
+      }
+    }
+  }
+})
+</code></pre><p>type 可以是下面原生构造器：</p>
+<pre><code>String
+Number
+Boolean
+Function
+Object
+Array
+Symbol
+</code></pre><p>type 也可以是一个自定义构造器函数，使用 instanceof 检测。 当 prop 验证失败，Vue 会抛出警告 (如果使用的是开发版本)。注意 prop 会在组件实例创建之前进行校验，所以在 default 或 validator 函数里，诸如 data、computed 或 methods 等实例属性还无法使用。这里就给人一种很怪异的感觉（有一种为了借鉴而借鉴的感觉），props和data等其他特性并不自洽。</p>
+<h3 id="非-Prop-特性"><a href="#非-Prop-特性" class="headerlink" title="非 Prop 特性"></a>非 Prop 特性</h3><p>与react类似，你可以直接传入某些未定义的特性到组件，组件会把这些未定义的prop直接挂载到组件的根元素上。</p>
+<h3 id="替换-合并现有的特性"><a href="#替换-合并现有的特性" class="headerlink" title="替换/合并现有的特性"></a>替换/合并现有的特性</h3><p>承接上文，当某些未定义的特性在组件的根元素上已经有原来的定义，外部又同时传入时，一般情况下，外部传入的值会替换组件内的值，而当特性为<code>class</code>或<code>style</code>时，两个字会进行合并。 篇幅有限，下篇再见。</p>
+
+          
+            <div>广告位招租</div>
+          
+          <hr>
+          <ul class="pager">
+              
+              <li class="previous">
+                  <a href="/2018/03/13/vue-e5-85-a5-e9-97-a8-e7-ac-94-e8-ae-b0-ef-bc-88-e4-ba-94-ef-bc-89/" data-toggle="tooltip" data-placement="left"
+                     title="vue入门笔记（五）">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/2018/03/09/vue-e5-85-a5-e9-97-a8-e7-ac-94-e8-ae-b0-ef-bc-88-e4-b8-89-ef-bc-89/" data-toggle="tooltip" data-placement="top"
+                     title="vue入门笔记（三）">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+        
+  <br>
+  
+
+  
+  </div>
+
+
+        
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#组件"><span class="toc-number">1.</span> <span class="toc-text">组件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用组件"><span class="toc-number">1.1.</span> <span class="toc-text">使用组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#全局注册"><span class="toc-number">1.1.1.</span> <span class="toc-text">全局注册</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#局部注册"><span class="toc-number">1.1.2.</span> <span class="toc-text">局部注册</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DOM-模板解析注意事项"><span class="toc-number">1.1.3.</span> <span class="toc-text">DOM 模板解析注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue实例中-data-必须是函数"><span class="toc-number">1.1.4.</span> <span class="toc-text">Vue实例中 data 必须是函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#组件组合"><span class="toc-number">1.2.</span> <span class="toc-text">组件组合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Prop"><span class="toc-number">1.2.1.</span> <span class="toc-text">Prop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态-Prop"><span class="toc-number">1.2.2.</span> <span class="toc-text">动态 Prop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#单向数据流"><span class="toc-number">1.2.3.</span> <span class="toc-text">单向数据流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Prop-验证"><span class="toc-number">1.2.4.</span> <span class="toc-text">Prop 验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非-Prop-特性"><span class="toc-number">1.2.5.</span> <span class="toc-text">非 Prop 特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#替换-合并现有的特性"><span class="toc-number">1.2.6.</span> <span class="toc-text">替换/合并现有的特性</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+  </div>
+
+
+      </div>
+  </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer>
+    <div class="text-center">
+      <ul class="list-inline">
+          
+              <li>
+                  <a href="/atom.xml" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+          
+          
+
+          
+
+          
+
+          
+              <li>
+                  <a target="_blank"  href="https://github.com/melorzhang">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+          
+
+          
+              <li>
+                  <a href="mailto:497112718@qq.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+      </ul>
+     <div class="text-muted copyright">
+            &copy;
+            
+              2018
+            
+            
+              <i class="fa fa-heart"></i>
+            
+            Melor
+        <br>
+          
+          
+          
+          
+      </div>
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

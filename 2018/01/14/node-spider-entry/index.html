@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="一个基于前端，配合node的学习路线">
+    <meta name="author" content="Melor">
+    <meta name="keyword" content="全栈技术">
+    <link rel="canonical" href="http://yoursite.com/2018/01/14/node-spider-entry/">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="alternate" type="application/atom+xml" title="&lt;div&gt;Melor&#39;s Blog&lt;/div&gt;" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <title>
+        
+        node 爬虫入门｜Melor的博客
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/main.css">
+
+    
+      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/css/highlight.css">
+    
+
+    
+
+
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- user customization -->
+    <link rel="stylesheet" href="/css/arsnippet.css">
+    <script src="/js/arsnippet.css.js"></script>
+</head>
+
+<style>
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/">
+            <div>Melor's Blog</div>
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/">首页</a>
+                </li>
+              
+                <li>
+                  <a href="/archives/">博文列表</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/images/default_bg.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>node 爬虫入门</h1>
+                        
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Melor</span>
+                               <span class="meta-item">Date: 2018-01-14</span>
+                               
+                                 <span class="meta-item">Updated On: 2018-09-13</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/categories/#技术分享"
+                                 title="技术分享">技术分享</a>
+                              
+                              <a class="tag" href="/categories/#爬虫"
+                                 title="爬虫">爬虫</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <div>什么都懂一点，生活更美好一些</div>
+          <h1 id="0x00"><a href="#0x00" class="headerlink" title="0x00"></a>0x00</h1><p>最近因为朋友问起，爬虫好做吗？无端联想到pythone大法好，就想去实践下。事前搜索相关资料，发现其实现在node也能做爬虫了，就放弃pythone直接投奔node去做爬虫。没想到写习惯js后，用node爬虫，上手还真挺快的。：D如果连什么是爬虫都没有概念的话，可以先自行百度。 在爬虫前，你应该要先了解一下<a href="https://baike.baidu.com/item/robots%E5%8D%8F%E8%AE%AE/2483797" target="_blank" rel="noopener">爬虫的相关协议</a>。不然被网站封了ip访问就不好了。如果只是单纯想对爬虫进行实践的话，不建议大量爬去网站内容，请求频率也不要太高，见好就收。</p>
+<h1 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h1><p>关于网页爬虫，其实无非就是三大模块：<strong>捉取页面数据</strong>，<strong>保存</strong>，<strong>数据处理</strong>。 而<strong>捉取页面数据</strong>可以说是最复杂的模块，因为他包含了一些听起来和他没有很直接联系的内容，例如<strong>获取url等基本操作和ip伪装及其他防反爬虫</strong>等等。而本文最主要的内容就是简单介绍一下node中如何捉取页面数据。</p>
+<h1 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h1><p>关于本文使用的外部模块及其简介如下：<br><a href="https://www.npmjs.com/package/superagent" target="_blank" rel="noopener">superagent</a> 一个用作客户端请求的库。 <a href="https://www.npmjs.com/package/cheerio" target="_blank" rel="noopener">cheerio</a> 一个用于node端提供jquery的api操作dom的库。</p>
+<h1 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h1><p>本次爬取的网站是<a href="http://588ku.com/" target="_blank" rel="noopener">千库网</a>（一个提供免费图片素材的网站），本次例子仅爬取100张图片，且下载的图片均为页面中正常显示的jpg图片而非高清png图，感兴趣的朋友可以自行研究如何爬取高清png图。 目录结构</p>
+<pre><code>pachong
+    ├─node_modules
+    ├─download
+    ├─package.json
+    ├─588ku.com.js
+    ├─utils.js
+    ├─userAgents.js
+    └─readme.md
+</code></pre><p>下面贴一下代码， 588ku.com.js</p>
+<pre><code>const sa = require(&apos;superagent&apos;);
+const cheerio = require(&apos;cheerio&apos;);
+const utils = require(&apos;./utils&apos;);
+const userAgents = require(&apos;./userAgents&apos;);
+
+const test=()=&gt;{};
+const main=()=&gt;{
+    console.log(&apos;main&apos;,new Date());
+    let userAgent = userAgents[parseInt(Math.random() * userAgents.length)]
+    sa.get(&apos;http://588ku.com/robots.txt&apos;)
+    .set(&apos;User-Agent&apos;,userAgent)
+    .end((err,res)=&gt;{
+        if(!err){
+            const html=res.text;
+            const sitemap=html.match(/Sitemap: (.*\.xml)/)[1];
+            loadSitemap(sitemap);
+        }else{
+            console.log(err);
+        }
+    })
+};
+main();
+const loadSitemap=(url)=&gt;{
+    console.log(&apos;loadSitemap&apos;,new Date());
+    let userAgent = userAgents[parseInt(Math.random() * userAgents.length)];
+    sa.get(url)
+    .set(&apos;User-Agent&apos;,userAgent)
+    .end((err,res)=&gt;{
+        if(!err){
+            const html=res.text;
+            const reg=/http.*\.xml/g;
+            const arr=html.match(reg);
+            // console.log(arr);
+            loadSubmap(arr[0]);
+        }else{
+            console.log(err);
+        }
+    })
+};
+const loadSubmap=(url)=&gt;{
+    console.log(&apos;loadSubmap&apos;,new Date());
+    let userAgent = userAgents[parseInt(Math.random() * userAgents.length)]
+    sa.get(url)
+    .set(&apos;User-Agent&apos;,userAgent)
+    .end((err,res)=&gt;{
+        if(!err){
+            const html=res.text;
+            const reg=/http.*\.html/g;
+            const arr=html.match(reg);
+            // console.log(arr);
+            for(let i=0,len=arr.length;i&lt;100;i++){
+                // 仅爬取部分内容，例如现在的100张图片
+                // 设置事件间隔不要太短，太短容易被封ip，而且也对别人服务器造成太大负担导致变成攻击别人服务器就不好了。
+                utils.sleep((i+1)*1000).then(()=&gt;{
+                    loadPage(arr[i]);
+                })
+            }
+        }else{
+            console.log(err);
+        }
+    })
+};
+
+const loadPage = (url) =&gt; {
+    console.log(&apos;loadPage&apos;,new Date());
+    let userAgent = userAgents[parseInt(Math.random() * userAgents.length)]
+    sa.get(url)
+    .set(&apos;User-Agent&apos;,userAgent)
+    .end((err,res)=&gt;{
+        if(!err){
+            const html=res.text;
+            const $ = cheerio.load(html);
+            const imgSrc = $(&apos;.img-l-box img&apos;).attr(&apos;src&apos;);
+            handlerImgSrc(imgSrc);
+        }else{
+            console.log(err);
+        }
+    });
+};
+const handlerImgSrc=(imgSrc)=&gt;{
+    console.log(&apos;handlerImgSrc&apos;,new Date());
+    utils.download(imgSrc);
+};
+</code></pre><p>utils.js</p>
+<pre><code>const http = require(&quot;http&quot;);
+const fs = require(&quot;fs&quot;);
+const download=(url,dir,ifRename,filename)=&gt;{
+    http.get(url, function(res){
+        var imgData = &quot;&quot;;
+        var filename=ifRename?filename:url.slice(url.lastIndexOf(&apos;/&apos;) + 1); 
+        res.setEncoding(&quot;binary&quot;); //一定要设置response的编码为binary否则会下载下来的图片打不开
+        res.on(&quot;data&quot;, function(chunk){
+            imgData+=chunk;
+        });
+        res.on(&quot;end&quot;, function(){
+            fs.writeFile(`${dir?dir:&apos;./download&apos;}/${filename}`, imgData, &quot;binary&quot;, function(err){
+                if(err){
+                    console.log(&quot;down fail&quot;,err);
+                }else{
+                    console.log(&quot;down success&quot;);
+                }
+            });
+        });
+    });
+};
+
+const sleep = (time) =&gt; {
+    return new Promise((resolve) =&gt; setTimeout(resolve, time)); 
+};
+exports.download=download;
+exports.sleep=sleep;
+</code></pre><p>userAgents.js</p>
+<pre><code>const userAgents = [
+    &apos;Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.12) Gecko/20070731 Ubuntu/dapper-security Firefox/1.5.0.12&apos;,
+    &apos;Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; Acoo Browser; SLCC1; .NET CLR 2.0.50727; Media Center PC 5.0; .NET CLR 3.0.04506)&apos;,
+    &apos;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.56 Safari/535.11&apos;,
+    &apos;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/535.20 (KHTML, like Gecko) Chrome/19.0.1036.7 Safari/535.20&apos;,
+    &apos;Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.8) Gecko Fedora/1.9.0.8-1.fc10 Kazehakase/0.5.6&apos;,
+    &apos;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.71 Safari/537.1 LBBROWSER&apos;,
+    &apos;Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0; .NET CLR 3.5.30729; .NET CLR 3.0.30729; .NET CLR 2.0.50727; Media Center PC 6.0) ,Lynx/2.8.5rel.1 libwww-FM/2.14 SSL-MM/1.4.1 GNUTLS/1.2.9&apos;,
+    &apos;Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727)&apos;,
+    &apos;Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E; QQBrowser/7.0.3698.400)&apos;,
+    &apos;Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; QQDownload 732; .NET4.0C; .NET4.0E)&apos;,
+    &apos;Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:2.0b13pre) Gecko/20110307 Firefox/4.0b13pre&apos;,
+    &apos;Opera/9.80 (Macintosh; Intel Mac OS X 10.6.8; U; fr) Presto/2.9.168 Version/11.52&apos;,
+    &apos;Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.12) Gecko/20070731 Ubuntu/dapper-security Firefox/1.5.0.12&apos;,
+    &apos;Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E; LBBROWSER)&apos;,
+    &apos;Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.8) Gecko Fedora/1.9.0.8-1.fc10 Kazehakase/0.5.6&apos;,
+    &apos;Mozilla/5.0 (X11; U; Linux; en-US) AppleWebKit/527+ (KHTML, like Gecko, Safari/419.3) Arora/0.6&apos;,
+    &apos;Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E; QQBrowser/7.0.3698.400)&apos;,
+    &apos;Opera/9.25 (Windows NT 5.1; U; en), Lynx/2.8.5rel.1 libwww-FM/2.14 SSL-MM/1.4.1 GNUTLS/1.2.9&apos;,
+    &apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36&apos;
+  ]
+
+  module.exports = userAgents
+</code></pre><p>详细代码会放到<a href="https://github.com/melorzhang/pachong" target="_blank" rel="noopener">github</a></p>
+
+          
+            <div>广告位招租</div>
+          
+          <hr>
+          <ul class="pager">
+              
+              <li class="previous">
+                  <a href="/2018/02/28/e5-a4-9a-e8-a1-8c-e6-96-87-e6-9c-ac-e8-b6-85-e5-87-ba-e9-9a-90-e8-97-8fcss/" data-toggle="tooltip" data-placement="left"
+                     title="多行文本超出隐藏css解决方案">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/2018/01/03/e6-9e-84-e5-bb-bagitlab-e7-9a-84-e4-b8-80-e6-ac-a1-e5-a4-b1-e8-b4-a5-e5-b0-9d-e8-af-95/" data-toggle="tooltip" data-placement="top"
+                     title="构建gitlab的一次失败尝试">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+        
+  <br>
+  
+
+  
+  </div>
+
+
+        
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x00"><span class="toc-number">1.</span> <span class="toc-text">0x00</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01"><span class="toc-number">2.</span> <span class="toc-text">0x01</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02"><span class="toc-number">3.</span> <span class="toc-text">0x02</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x03"><span class="toc-number">4.</span> <span class="toc-text">0x03</span></a></li></ol>
+        
+    </div>
+  </div>
+
+
+      </div>
+  </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer>
+    <div class="text-center">
+      <ul class="list-inline">
+          
+              <li>
+                  <a href="/atom.xml" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+          
+          
+
+          
+
+          
+
+          
+              <li>
+                  <a target="_blank"  href="https://github.com/melorzhang">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+          
+
+          
+              <li>
+                  <a href="mailto:497112718@qq.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+      </ul>
+     <div class="text-muted copyright">
+            &copy;
+            
+              2018
+            
+            
+              <i class="fa fa-heart"></i>
+            
+            Melor
+        <br>
+          
+          
+          
+          
+      </div>
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

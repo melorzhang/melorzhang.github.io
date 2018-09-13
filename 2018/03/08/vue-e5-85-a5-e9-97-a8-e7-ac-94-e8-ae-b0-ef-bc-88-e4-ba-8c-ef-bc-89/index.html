@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="一个基于前端，配合node的学习路线">
+    <meta name="author" content="Melor">
+    <meta name="keyword" content="全栈技术">
+    <link rel="canonical" href="http://yoursite.com/2018/03/08/vue-e5-85-a5-e9-97-a8-e7-ac-94-e8-ae-b0-ef-bc-88-e4-ba-8c-ef-bc-89/">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="alternate" type="application/atom+xml" title="&lt;div&gt;Melor&#39;s Blog&lt;/div&gt;" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <title>
+        
+        vue入门笔记（二）｜Melor的博客
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/main.css">
+
+    
+      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/css/highlight.css">
+    
+
+    
+
+
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- user customization -->
+    <link rel="stylesheet" href="/css/arsnippet.css">
+    <script src="/js/arsnippet.css.js"></script>
+</head>
+
+<style>
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/">
+            <div>Melor's Blog</div>
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/">首页</a>
+                </li>
+              
+                <li>
+                  <a href="/archives/">博文列表</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/images/default_bg.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>vue入门笔记（二）</h1>
+                        
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Melor</span>
+                               <span class="meta-item">Date: 2018-03-08</span>
+                               
+                                 <span class="meta-item">Updated On: 2018-09-13</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/categories/#vue相关"
+                                 title="vue相关">vue相关</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <div>什么都懂一点，生活更美好一些</div>
+          <h1 id="列表渲染"><a href="#列表渲染" class="headerlink" title="列表渲染"></a>列表渲染</h1><h2 id="数组遍历"><a href="#数组遍历" class="headerlink" title="数组遍历"></a>数组遍历</h2><pre><code>&lt;ul id=&quot;example-2&quot;&gt;
+  &lt;li v-for=&quot;(item, index) in items&quot; :key=&quot;index&quot;&gt;
+    { { parentMessage }} - { { index }} - { { item.message }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+
+var example2 = new Vue({
+  el: &apos;#example-2&apos;,
+  data: {
+    parentMessage: &apos;Parent&apos;,
+    items: [
+      { message: &apos;Foo&apos; },
+      { message: &apos;Bar&apos; }
+    ]
+  }
+})
+</code></pre><h2 id="遍历对象"><a href="#遍历对象" class="headerlink" title="遍历对象"></a>遍历对象</h2><pre><code>&lt;div v-for=&quot;(value, key, index) in object&quot;&gt;
+  { { index }}. { { key }}: { { value }}
+&lt;/div&gt;
+</code></pre><h2 id="数组更新机制"><a href="#数组更新机制" class="headerlink" title="数组更新机制"></a>数组更新机制</h2><p>使用变异方法更新数组后，会自动更新</p>
+<pre><code>push()
+pop()
+shift()
+unshift()
+splice()
+sort()
+reverse()
+</code></pre><p>使用非变异方法修改数组需要用新数组替换原数组，才能触发更新</p>
+<pre><code>filter()
+concat()
+slice()
+</code></pre><p>非变异方法都是返回新数组，不修改原数组的方法</p>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>由于 JavaScript 的限制，Vue 不能检测以下变动的数组： 当你利用索引直接设置一个项时，例如：<code>vm.items[indexOfItem] = newValue</code> 当你修改数组的长度时，例如：<code>vm.items.length = newLength</code> 为了解决第一类问题，以下两种方式都可以实现和 <code>vm.items[indexOfItem] = newValue</code>相同的效果，同时也将触发状态更新：</p>
+<pre><code>// Vue.set
+Vue.set(example1.items, indexOfItem, newValue)
+// Array.prototype.splice
+example1.items.splice(indexOfItem, 1, newValue)
+</code></pre><p>为了解决第二类问题，你可以使用 splice：</p>
+<pre><code>example1.items.splice(newLength)
+</code></pre><h2 id="对象更改检测注意事项"><a href="#对象更改检测注意事项" class="headerlink" title="对象更改检测注意事项"></a>对象更改检测注意事项</h2><p>还是由于 JavaScript 的限制，Vue 不能检测对象属性的添加或删除：</p>
+<pre><code>var vm = new Vue({
+  data: {
+    a: 1
+  }
+})
+// `vm.a` 现在是响应式的
+
+vm.b = 2
+// `vm.b` 不是响应式的
+</code></pre><p>对于已经创建的实例，Vue 不能动态添加根级别的响应式属性。但是，可以使用 Vue.set(object, key, value) 方法向嵌套对象添加响应式属性。例如，对于：</p>
+<pre><code>var vm = new Vue({
+  data: {
+    userProfile: {
+      name: &apos;Anika&apos;
+    }
+  }
+})
+</code></pre><p>你可以添加一个新的 age 属性到嵌套的 userProfile 对象：</p>
+<pre><code>Vue.set(vm.userProfile, &apos;age&apos;, 27)
+</code></pre><p>你还可以使用 vm.$set 实例方法，它只是全局 Vue.set 的别名：</p>
+<pre><code>vm.$set(vm.userProfile, &apos;age&apos;, 27)
+</code></pre><p>有时你可能需要为已有对象赋予多个新属性，比如使用 Object.assign() 或 _.extend()。在这种情况下，你应该用两个对象的属性创建一个新的对象。所以，如果你想添加新的响应式属性，不要像这样：</p>
+<pre><code>Object.assign(vm.userProfile, {
+  age: 27,
+  favoriteColor: &apos;Vue Green&apos;
+})
+</code></pre><p>你应该这样做：</p>
+<pre><code>vm.userProfile = Object.assign({}, vm.userProfile, {
+  age: 27,
+  favoriteColor: &apos;Vue Green&apos;
+})
+</code></pre><p>ps： <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" target="_blank" rel="noopener">Object.assign</a> MDN解释</p>
+<h1 id="显示过滤-排序结果"><a href="#显示过滤-排序结果" class="headerlink" title="显示过滤/排序结果"></a>显示过滤/排序结果</h1><p>通用方法，设置method方法：</p>
+<pre><code>&lt;li v-for=&quot;n in even(numbers)&quot;&gt;{ { n }}&lt;/li&gt;
+
+
+data: {
+  numbers: [ 1, 2, 3, 4, 5 ]
+},
+methods: {
+  even: function (numbers) {
+    return numbers.filter(function (number) {
+      return number % 2 === 0
+    })
+  }
+}
+</code></pre><h2 id="一段取值范围的-v-for"><a href="#一段取值范围的-v-for" class="headerlink" title="一段取值范围的 v-for"></a>一段取值范围的 v-for</h2><pre><code>&lt;div&gt;
+  &lt;span v-for=&quot;n in 10&quot;&gt;{ { n }} &lt;/span&gt;
+&lt;/div&gt;
+</code></pre><p>结果：</p>
+<pre><code>1 2 3 4 5 6 7 8 9 10
+</code></pre><p>居然是从1开始算的，emmm。。。实际使用中序号从1数起可能占多数情况吧，但有点不符合代码预期</p>
+<h2 id="v-for配合template使用"><a href="#v-for配合template使用" class="headerlink" title="v-for配合template使用"></a>v-for配合template使用</h2><p>v-for 和 v-if 一样，可以配合template 使用渲染多个节点，即</p>
+<pre><code>&lt;ul&gt;
+  &lt;template v-for=&quot;item in items&quot;&gt;
+    &lt;li&gt;{ { item.msg }}&lt;/li&gt;
+    &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;
+  &lt;/template&gt;
+&lt;/ul&gt;
+</code></pre><h2 id="v-for-with-v-if"><a href="#v-for-with-v-if" class="headerlink" title="v-for with v-if"></a>v-for with v-if</h2><p>使用例子:</p>
+<pre><code>&lt;li v-for=&quot;todo in todos&quot; v-if=&quot;!todo.isComplete&quot;&gt;
+  { { todo }}
+&lt;/li&gt;
+</code></pre><p>理解上,可以当作：</p>
+<pre><code>&lt;li v-for=&quot;todo in todos&quot;&gt;
+    &lt;template v-if=&quot;!todo.isComplete&quot;&gt;
+        { { todo }}
+    &lt;/template&gt;
+&lt;/li&gt;
+</code></pre><p>两个指令一起写，v-if能访问v-for迭代的变量名，方便是方便，新手不友好，要死记。</p>
+<h2 id="组件的v-for"><a href="#组件的v-for" class="headerlink" title="组件的v-for"></a>组件的v-for</h2><p>组件内使用v-for指令，需要注意事项，例如，使用时为防止意外bug，统一使用is设置别名方法调用组件，同时，<code>v-bind:key</code>属性必须设置，其他随意。</p>
+<pre><code>&lt;ul&gt;
+    &lt;li
+      is=&quot;todo-item&quot;
+      v-for=&quot;(todo, index) in todos&quot;
+      v-bind:key=&quot;todo.id&quot;
+      v-bind:title=&quot;todo.title&quot;
+      v-on:remove=&quot;todos.splice(index, 1)&quot;
+    &gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><h1 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h1><h2 id="监听事件"><a href="#监听事件" class="headerlink" title="监听事件"></a>监听事件</h2><p>使用<code>v-on:event=</code>的方式绑定事件，可以直接这样写，</p>
+<pre><code>&lt;div id=&quot;example-1&quot;&gt;
+  &lt;button v-on:click=&quot;counter += 1&quot;&gt;Add 1&lt;/button&gt;
+  &lt;p&gt;The button above has been clicked { { counter }} times.&lt;/p&gt;
+&lt;/div&gt;
+
+
+var example1 = new Vue({
+  el: &apos;#example-1&apos;,
+  data: {
+    counter: 0
+  }
+})
+</code></pre><p>在<code>&quot; &quot;</code>中，可以直接访问data中的量，并对其修改， 当事件执行函数复杂后，可以设置method，对函数进行绑定, 当直接绑定函数名，会传入event对象， 如果调用方法，就会执行方法，具体如下，</p>
+<pre><code>&lt;div id=&quot;example-2&quot;&gt;
+  &lt;!-- `greet` 是在下面定义的方法名 --&gt;
+  &lt;button v-on:click=&quot;greet&quot;&gt;Greet&lt;/button&gt;
+  &lt;button v-on:click=&quot;say(&apos;hi&apos;)&quot;&gt;Greet&lt;/button&gt;
+&lt;/div&gt;
+
+
+var example2 = new Vue({
+  el: &apos;#example-2&apos;,
+  data: {
+    name: &apos;Vue.js&apos;
+  },
+  // 在 `methods` 对象中定义方法
+  methods: {
+    greet: function (event) {
+      // `this` 在方法里指向当前 Vue 实例
+      alert(&apos;Hello &apos; + this.name + &apos;!&apos;)
+      // `event` 是原生 DOM 事件
+      if (event) {
+        alert(event.target.tagName)
+      }
+    },
+    say: function (message) {
+      alert(message)
+    }
+  }
+})
+</code></pre><p>实际上，上面的<code>&lt;button v-on:click=&quot;say(&#39;hi&#39;)&quot;&gt;Greet&lt;/button&gt;</code>中，<code>say(&#39;hi&#39;)</code>,和前面的一个例子里的<code>count++</code>是等价的，就是执行这个语句，而在<code>&lt;button v-on:click=&quot;greet&quot;&gt;Greet&lt;/button&gt;</code>中是把事件名绑定到按钮，所以会有event事件传入。 那么，当需要同时传入event对象和自定义参数时，就要用<code>$event</code>传递</p>
+<pre><code>&lt;button v-on:click=&quot;warn(&apos;Form cannot be submitted yet.&apos;, $event)&quot;&gt;
+  Submit
+&lt;/button&gt;
+
+
+methods: {
+  warn: function (message, event) {
+    // 现在我们可以访问原生事件对象
+    if (event) event.preventDefault()
+    alert(message)
+  }
+}
+</code></pre><h2 id="事件修饰符"><a href="#事件修饰符" class="headerlink" title="事件修饰符"></a>事件修饰符</h2><pre><code>.stop
+.prevent
+.capture
+.self
+.once
+</code></pre><p>具体用法</p>
+<pre><code>&lt;!-- 阻止单击事件继续传播 --&gt;
+&lt;a v-on:click.stop=&quot;doThis&quot;&gt;&lt;/a&gt;
+
+&lt;!-- 提交事件不再重载页面 --&gt;
+&lt;form v-on:submit.prevent=&quot;onSubmit&quot;&gt;&lt;/form&gt;
+
+&lt;!-- 修饰符可以串联 --&gt;
+&lt;a v-on:click.stop.prevent=&quot;doThat&quot;&gt;&lt;/a&gt;
+
+&lt;!-- 只有修饰符 --&gt;
+&lt;form v-on:submit.prevent&gt;&lt;/form&gt;
+
+&lt;!-- 添加事件监听器时使用事件捕获模式 --&gt;
+&lt;!-- 即元素自身触发的事件先在此处处理，然后才交由内部元素进行处理 --&gt;
+&lt;div v-on:click.capture=&quot;doThis&quot;&gt;...&lt;/div&gt;
+
+&lt;!-- 只当在 event.target 是当前元素自身时触发处理函数 --&gt;
+&lt;!-- 即事件不是从内部元素触发的 --&gt;
+&lt;div v-on:click.self=&quot;doThat&quot;&gt;...&lt;/div&gt;
+
+&lt;!-- 2.1.4新增 --&gt;
+&lt;!-- 点击事件将只会触发一次 --&gt;
+&lt;a v-on:click.once=&quot;doThis&quot;&gt;&lt;/a&gt;
+
+&lt;!-- 2.3.0新增 --&gt;
+&lt;!-- 滚动事件的默认行为 (即滚动行为) 将会立即触发 --&gt;
+&lt;!-- 而不会等待 `onScroll` 完成  --&gt;
+&lt;!-- 这其中包含 `event.preventDefault()` 的情况 --&gt;
+&lt;div v-on:scroll.passive=&quot;onScroll&quot;&gt;...&lt;/div&gt;
+</code></pre><p>[!] 使用修饰符时，顺序很重要；相应的代码会以同样的顺序产生。因此，用 <code>v-on:click.prevent.self</code> 会阻止所有的点击，而 <code>v-on:click.self.prevent</code> 只会阻止对元素自身的点击。 [!] 不要把 <code>.passive</code> 和 <code>.prevent</code> 一起使用，因为 <code>.prevent</code> 将会被忽略，同时浏览器可能会向你展示一个警告。请记住，<code>.passive</code> 会告诉浏览器你不想阻止事件的默认行为。</p>
+<h2 id="按键修饰符"><a href="#按键修饰符" class="headerlink" title="按键修饰符"></a>按键修饰符</h2><p>全部的按键别名：</p>
+<pre><code>.enter
+.tab
+.delete (捕获“删除”和“退格”键)
+.esc
+.space
+.up
+.down
+.left
+.right
+</code></pre><p>可以通过全局 <code>config.keyCodes</code> 对象自定义按键修饰符别名：</p>
+<pre><code>// 可以使用 `v-on:keyup.f1`
+Vue.config.keyCodes.f1 = 112
+</code></pre><p>自动匹配按键修饰符 2.5.0 新增 你也可直接将 <code>KeyboardEvent.key</code> 暴露的任意有效按键名转换为 kebab-case 来作为修饰符：</p>
+<pre><code>&lt;input @keyup.page-down=&quot;onPageDown&quot;&gt;
+</code></pre><p>在上面的例子中，处理函数仅在 <code>$event.key === &#39;PageDown&#39;</code> 时被调用。 有一些按键 (.esc 以及所有的方向键) 在 IE9 中有不同的 key 值, 如果你想支持 IE9，它们的内置别名应该是首选。 系统修饰键 2.1.0 新增 可以用如下修饰符来实现仅在按下相应按键时才触发鼠标或键盘事件的监听器。</p>
+<pre><code>.ctrl
+.alt
+.shift
+.meta
+</code></pre><p>[!]在 Mac 系统键盘上，meta 对应 command 键 (⌘)。在 Windows 系统键盘 meta 对应 Windows 徽标键 (⊞)。在 Sun 操作系统键盘上，meta 对应实心宝石键 (◆)。在其他特定键盘上，尤其在 MIT 和 Lisp 机器的键盘、以及其后继产品，比如 Knight 键盘、space-cadet 键盘，meta 被标记为“META”。在 Symbolics 键盘上，meta 被标记为“META”或者“Meta”。 例如：</p>
+<pre><code>&lt;!-- Alt + C --&gt;
+&lt;input @keyup.alt.67=&quot;clear&quot;&gt;
+
+&lt;!-- Ctrl + Click --&gt;
+&lt;div @click.ctrl=&quot;doSomething&quot;&gt;Do something&lt;/div&gt;
+</code></pre><p>请注意修饰键与常规按键不同，在和 keyup 事件一起用时，事件触发时修饰键必须处于按下状态。换句话说，只有在按住 ctrl 的情况下释放其它按键，才能触发 <code>keyup.ctrl</code>。而单单释放 ctrl 也不会触发事件。如果你想要这样的行为，请为 ctrl 换用 <code>keyCode：keyup.17</code>。</p>
+<h2 id="exact-修饰符"><a href="#exact-修饰符" class="headerlink" title=".exact 修饰符"></a>.exact 修饰符</h2><p>2.5.0 新增 .exact 修饰符允许你控制由精确的系统修饰符组合触发的事件。</p>
+<pre><code>&lt;!-- 即使 Alt 或 Shift 被一同按下时也会触发 --&gt;
+&lt;button @click.ctrl=&quot;onClick&quot;&gt;A&lt;/button&gt;
+
+&lt;!-- 有且只有 Ctrl 被按下的时候才触发 --&gt;
+&lt;button @click.ctrl.exact=&quot;onCtrlClick&quot;&gt;A&lt;/button&gt;
+
+&lt;!-- 没有任何系统修饰符被按下的时候才触发 --&gt;
+&lt;button @click.exact=&quot;onClick&quot;&gt;A&lt;/button&gt;
+</code></pre><h2 id="鼠标按钮修饰符"><a href="#鼠标按钮修饰符" class="headerlink" title="鼠标按钮修饰符"></a>鼠标按钮修饰符</h2><p>2.2.0 新增</p>
+<pre><code>.left
+.right
+.middle
+</code></pre>
+          
+            <div>广告位招租</div>
+          
+          <hr>
+          <ul class="pager">
+              
+              <li class="previous">
+                  <a href="/2018/03/09/vue-e5-85-a5-e9-97-a8-e7-ac-94-e8-ae-b0-ef-bc-88-e4-b8-89-ef-bc-89/" data-toggle="tooltip" data-placement="left"
+                     title="vue入门笔记（三）">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/2018/03/07/vue-e5-85-a5-e9-97-a8-e7-ac-94-e8-ae-b0-ef-bc-88-e4-b8-80-ef-bc-89/" data-toggle="tooltip" data-placement="top"
+                     title="vue入门笔记（一）">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+        
+  <br>
+  
+
+  
+  </div>
+
+
+        
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#列表渲染"><span class="toc-number">1.</span> <span class="toc-text">列表渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数组遍历"><span class="toc-number">1.1.</span> <span class="toc-text">数组遍历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#遍历对象"><span class="toc-number">1.2.</span> <span class="toc-text">遍历对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组更新机制"><span class="toc-number">1.3.</span> <span class="toc-text">数组更新机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注意事项"><span class="toc-number">1.3.1.</span> <span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象更改检测注意事项"><span class="toc-number">1.4.</span> <span class="toc-text">对象更改检测注意事项</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#显示过滤-排序结果"><span class="toc-number">2.</span> <span class="toc-text">显示过滤/排序结果</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一段取值范围的-v-for"><span class="toc-number">2.1.</span> <span class="toc-text">一段取值范围的 v-for</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#v-for配合template使用"><span class="toc-number">2.2.</span> <span class="toc-text">v-for配合template使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#v-for-with-v-if"><span class="toc-number">2.3.</span> <span class="toc-text">v-for with v-if</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#组件的v-for"><span class="toc-number">2.4.</span> <span class="toc-text">组件的v-for</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#事件处理"><span class="toc-number">3.</span> <span class="toc-text">事件处理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#监听事件"><span class="toc-number">3.1.</span> <span class="toc-text">监听事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件修饰符"><span class="toc-number">3.2.</span> <span class="toc-text">事件修饰符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#按键修饰符"><span class="toc-number">3.3.</span> <span class="toc-text">按键修饰符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exact-修饰符"><span class="toc-number">3.4.</span> <span class="toc-text">.exact 修饰符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#鼠标按钮修饰符"><span class="toc-number">3.5.</span> <span class="toc-text">鼠标按钮修饰符</span></a></li></ol></li></ol>
+        
+    </div>
+  </div>
+
+
+      </div>
+  </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer>
+    <div class="text-center">
+      <ul class="list-inline">
+          
+              <li>
+                  <a href="/atom.xml" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+          
+          
+
+          
+
+          
+
+          
+              <li>
+                  <a target="_blank"  href="https://github.com/melorzhang">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+          
+
+          
+              <li>
+                  <a href="mailto:497112718@qq.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+      </ul>
+     <div class="text-muted copyright">
+            &copy;
+            
+              2018
+            
+            
+              <i class="fa fa-heart"></i>
+            
+            Melor
+        <br>
+          
+          
+          
+          
+      </div>
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="一个基于前端，配合node的学习路线">
+    <meta name="author" content="Melor">
+    <meta name="keyword" content="全栈技术">
+    <link rel="canonical" href="http://yoursite.com/2017/11/24/e5-b8-b8-e7-94-a8markdown-e5-8f-82-e8-80-83-ef-bc-88-e6-8c-81-e7-bb-ad-e6-9b-b4-e6-96-b0-e4-b8-ad-ef-bc-89/">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="alternate" type="application/atom+xml" title="&lt;div&gt;Melor&#39;s Blog&lt;/div&gt;" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <title>
+        
+        常用markdown参考（持续更新中）｜Melor的博客
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/main.css">
+
+    
+      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/css/highlight.css">
+    
+
+    
+
+
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- user customization -->
+    <link rel="stylesheet" href="/css/arsnippet.css">
+    <script src="/js/arsnippet.css.js"></script>
+</head>
+
+<style>
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/">
+            <div>Melor's Blog</div>
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/">首页</a>
+                </li>
+              
+                <li>
+                  <a href="/archives/">博文列表</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/images/default_bg.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>常用markdown参考（持续更新中）</h1>
+                        
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Melor</span>
+                               <span class="meta-item">Date: 2017-11-24</span>
+                               
+                                 <span class="meta-item">Updated On: 2018-09-13</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/categories/#markdown语法"
+                                 title="markdown语法">markdown语法</a>
+                              
+                              <a class="tag" href="/categories/#技术分享"
+                                 title="技术分享">技术分享</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <div>什么都懂一点，生活更美好一些</div>
+          <blockquote>
+<p>更新于2017-11-24 博客引入了markdown语法编辑器，于是写篇文章记录下markdown语法；</p>
+</blockquote>
+<h1 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h1><p>写法：</p>
+<pre><code>&gt; 上面就有了了
+&gt;&gt; 二重引用
+&gt;&gt;&gt; 禁忌的多重引用（雾）
+</code></pre><p>效果：</p>
+<blockquote>
+<p>上面就有了了</p>
+<blockquote>
+<p>二重引用</p>
+<blockquote>
+<p>禁忌的多重引用（雾）</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h1 id="字体样式"><a href="#字体样式" class="headerlink" title="字体样式"></a>字体样式</h1><p>写法：</p>
+<pre><code>*斜体*
+_斜体_ 
+**粗体**
+***加粗斜体***
+~~删除线~~
+</code></pre><p>效果： _斜体_ _斜体_ <strong>粗体</strong> <strong><em>加粗斜体</em></strong> 删除线</p>
+<h1 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h1><p>写法：</p>
+<pre><code># 超链接 {#alink}
+欢迎来到[我的博客](http://www.melor.cc/)
+[我的博客][1]
+[1]:http://www.melor.cc/
+&lt;http://www.melor.cc&gt;
+跳转到[超链接](#alink)
+</code></pre><p>效果： 欢迎来到<a href="http://www.melor.cc/" target="_blank" rel="noopener">我的博客</a> <a href="http://www.melor.cc/" target="_blank" rel="noopener">我的博客</a> <a href="http://www.melor.cc" target="_blank" rel="noopener">http://www.melor.cc</a> 跳转到<a href="#alink">超链接</a></p>
+<h1 id="分隔符"><a href="#分隔符" class="headerlink" title="分隔符"></a>分隔符</h1><p>写法：</p>
+<pre><code>分割线
+***
+
+---
+打字带空格也可以哦
+- - -
+</code></pre><p>效果： 分割线</p>
+<hr>
+<hr>
+<p>打 字 带 空 格 也 可 以 哦</p>
+<hr>
+<h1 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h1><p>写法：</p>
+<pre><code>`console.log(abc)`
+</code></pre><p>效果： <code>console.log(abc)</code></p>
+<h1 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h1><p>写法：</p>
+<pre><code>- 1
+- 2
+- 3
+1. a
+2. b
+3. c
+</code></pre><p>效果： - 1 - 2 - 3 1. a 2. b 3. c 表格</p>
+<pre><code>//前面带一个空行
+|Modifier(s)|Prefix|
+| ------------- |:-------------:|
+|.passive|&amp;|
+|.capture|!|
+|.once|~|
+|.capture.once or .once.capture|~!|
+</code></pre><p>Modifier(s)</p>
+<p>Prefix</p>
+<p>.passive</p>
+<p>&amp;</p>
+<p>.capture</p>
+<p>!</p>
+<p>.once</p>
+<p>~</p>
+<p>.capture.once or .once.capture</p>
+<p>~!</p>
+
+          
+            <div>广告位招租</div>
+          
+          <hr>
+          <ul class="pager">
+              
+              <li class="previous">
+                  <a href="/2017/12/27/repeating-linear-gradient-e5-ae-9e-e7-8e-b0-e8-99-9a-e7-ba-bf-e8-be-b9-e6-a1-86-e7-ba-bf/" data-toggle="tooltip" data-placement="left"
+                     title="repeating-linear-gradient 实现虚线边框线">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/2017/11/15/算法题/" data-toggle="tooltip" data-placement="top"
+                     title="一个算法题">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+        
+  <br>
+  
+
+  
+  </div>
+
+
+        
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#引用"><span class="toc-number">1.</span> <span class="toc-text">引用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#字体样式"><span class="toc-number">2.</span> <span class="toc-text">字体样式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#超链接"><span class="toc-number">3.</span> <span class="toc-text">超链接</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分隔符"><span class="toc-number">4.</span> <span class="toc-text">分隔符</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码块"><span class="toc-number">5.</span> <span class="toc-text">代码块</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#列表"><span class="toc-number">6.</span> <span class="toc-text">列表</span></a></li></ol>
+        
+    </div>
+  </div>
+
+
+      </div>
+  </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer>
+    <div class="text-center">
+      <ul class="list-inline">
+          
+              <li>
+                  <a href="/atom.xml" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+          
+          
+
+          
+
+          
+
+          
+              <li>
+                  <a target="_blank"  href="https://github.com/melorzhang">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+          
+
+          
+              <li>
+                  <a href="mailto:497112718@qq.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+      </ul>
+     <div class="text-muted copyright">
+            &copy;
+            
+              2018
+            
+            
+              <i class="fa fa-heart"></i>
+            
+            Melor
+        <br>
+          
+          
+          
+          
+      </div>
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

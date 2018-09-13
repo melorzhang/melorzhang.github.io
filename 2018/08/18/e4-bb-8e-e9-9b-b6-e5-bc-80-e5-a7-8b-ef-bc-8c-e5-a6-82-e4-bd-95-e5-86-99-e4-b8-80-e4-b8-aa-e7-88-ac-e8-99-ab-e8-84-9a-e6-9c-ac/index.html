@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="一个基于前端，配合node的学习路线">
+    <meta name="author" content="Melor">
+    <meta name="keyword" content="全栈技术">
+    <link rel="canonical" href="http://yoursite.com/2018/08/18/e4-bb-8e-e9-9b-b6-e5-bc-80-e5-a7-8b-ef-bc-8c-e5-a6-82-e4-bd-95-e5-86-99-e4-b8-80-e4-b8-aa-e7-88-ac-e8-99-ab-e8-84-9a-e6-9c-ac/">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="alternate" type="application/atom+xml" title="&lt;div&gt;Melor&#39;s Blog&lt;/div&gt;" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <title>
+        
+        从零开始，如何用puppeteer写一个爬虫脚本｜Melor的博客
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/main.css">
+
+    
+      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/css/highlight.css">
+    
+
+    
+
+
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- user customization -->
+    <link rel="stylesheet" href="/css/arsnippet.css">
+    <script src="/js/arsnippet.css.js"></script>
+</head>
+
+<style>
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/">
+            <div>Melor's Blog</div>
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/">首页</a>
+                </li>
+              
+                <li>
+                  <a href="/archives/">博文列表</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/images/default_bg.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>从零开始，如何用puppeteer写一个爬虫脚本</h1>
+                        
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Melor</span>
+                               <span class="meta-item">Date: 2018-08-18</span>
+                               
+                                 <span class="meta-item">Updated On: 2018-09-13</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/categories/#爬虫"
+                                 title="爬虫">爬虫</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <div>什么都懂一点，生活更美好一些</div>
+          <p>最近看到一篇关于爬虫的文章，而自己又正好在爬虫，于是就想写一篇分享下， 让我们一步一步来， 第一步：安装核心爬虫依赖puppeteer， 如果你打开googole.com是404，运行<code>npm i puppeteer</code>前，先运行<code>set PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1</code>； ok，如果没有问题，我们可以在项目根目录（下文简称根目录）下新建<code>index.js</code>;</p>
+<pre><code>//index.js
+const puppeteer=require(&apos;puppeteer&apos;);
+</code></pre><p>第二步：选择一个你需要爬取资源的站点， 作为一个b站用户，拿b站作为举例吧，我经常会看排行榜，于是今天我们就爬爬排行榜，地址（<a href="https://www.bilibili.com/ranking/all/0/0/3）；" target="_blank" rel="noopener">https://www.bilibili.com/ranking/all/0/0/3）；</a> 第三步：分析如何爬取站点内容， 打开chrome浏览器，按<code>f12</code>，按<code>ctrl+shift+c</code>，你首先就会看到排行榜每个条目对应的一些信息，如果你有过简单的爬虫经验，你大概可能会直接获取页面内容再做提取，当然不是不行，但这种方法一般最后才采取。更优雅的方法是去爬api，要爬api，我们需要将刚刚打开的调试工具切换到network界面，在页面点一点链接跳转，你会发现一些请求记录，自己点开看看，那些是加载这个网页所需要的资源，其中可能就有我们需要的资源，一般来说，xhr选项卡会对应数据内容，但比较神奇，经过调试发现，数据再js选项卡中找到。 <img src="https://user-gold-cdn.xitu.io/2018/8/16/165429c45e1df0fb?imageView2/2/w/480/h/480/q/85/interlace/1" alt=""> 然后刷新一下页面，嗯，你会发现，没有了刚刚的发现请求，那数据去哪了呢，api没数据，那数据只能在页面了，估计是为了更好的渲染，数据放在服务端渲染了，api数据只有在切换页面的时候才会有，那么这次就直接用最后手段在页面直接爬取吧。 第四步：写爬取代码， 回到我们的<code>index.js</code>；</p>
+<pre><code>//index.js
+const puppeteer=require(&apos;puppeteer&apos;);
+const devices = require(&apos;puppeteer/DeviceDescriptors&apos;);
+const iPad = devices[&apos;iPad landscape&apos;];//https://github.com/GoogleChrome/puppeteer/blob/master/DeviceDescriptors.js
+
+const program = require(&apos;commander&apos;);
+
+//定义一些命令
+program
+    .version(&apos;0.0.1&apos;)
+    .option(&apos;-t, --top_10&apos;,&apos;show top 10&apos;)
+    .parse(process.argv);
+
+//记录结果，如果想写到数据库，自行对接即可
+const log4js = require(&apos;log4js&apos;);
+log4js.configure({
+    appenders: { log: { type: &apos;file&apos;, filename: &apos;./log/log.log&apos; } },
+    categories: { default: { appenders: [&apos;log&apos;], level: &apos;info&apos; } }
+});
+const logger = log4js.getLogger(&apos;log&apos;);
+
+const ifOpenBrowser=false;
+const lanchConf={
+    headless:!ifOpenBrowser,
+    // executablePath: &apos;C:/Users/xxx/Downloads/chromium/chrome-win32/chrome.exe&apos;,//mac用户自行查看文档更改
+};
+
+const sleep=(time)=&gt;{
+    return new Promise(resolve=&gt;setTimeout(resolve,time))
+};
+async function repeat(time,fn,gapTime=500){
+    if(time&gt;0){
+        // console.log(&apos;do fn&apos;,time);
+        await fn();
+        await sleep(gapTime);
+        return repeat(--time,fn,gapTime)
+    }
+    // console.log(&apos;final&apos;);
+    return {msg:&apos;done&apos;}
+}
+const banList=[&apos;.png&apos;,&apos;.jpg&apos;];
+puppeteer.launch(lanchConf).then(async browser =&gt; {
+    //打开一个新的页面
+    const page = await browser.newPage();
+    //更改浏览器外观,宽高等
+    await page.emulate(iPad);
+    //启用请求拦截
+    await page.setRequestInterception(true);
+    //拦截无用请求
+    page.on(&apos;request&apos;, interceptedRequest =&gt; {
+        //屏蔽后缀为.png或.jpg的请求；减少资源消耗
+        if (banList.some(val=&gt;interceptedRequest.url().match(val))){
+            interceptedRequest.continue();
+            //本来是要屏蔽的，但图片地址在屏蔽的情况下不能获取，故开启
+        } else{
+            interceptedRequest.continue();
+        }
+    });
+    //跳转到我们的目标页面
+    await page.goto(&apos;https://www.bilibili.com/ranking/all/0/0/3&apos;,{
+        waitUntil:&apos;networkidle0&apos;//页面完全加载
+    });
+
+    // 图片实现了懒加载，页面需要滚动到底部,连续点击翻页键一定次数，否则图片地址可能不能拿到
+    await repeat(20,async ()=&gt;{
+        await page.keyboard.press(&apos;PageDown&apos;,200);
+    },200);
+
+    //通过选择器找到目标，如果觉得api难懂，建议使用cheerio辅助
+    const listHandle = await page.$(&apos;.rank-list&apos;);
+    //处理子节点内容，难点在选择器的处理，部分反爬虫的页面不会提供一直不变的选择器
+    const titles=await listHandle.$$eval(&apos;.info .title&apos;, nodes =&gt; nodes.map(n =&gt; n.innerText));
+    const authors=await listHandle.$$eval(&apos;.detail&gt;a&gt;.data-box&apos;, nodes =&gt; nodes.map(n =&gt; n.innerText));
+    const pts=await listHandle.$$eval(&apos;.pts div&apos;, nodes =&gt; nodes.map(n =&gt; n.innerText));
+    const links=await listHandle.$$eval(&apos;.title&apos;, nodes =&gt; nodes.map(n =&gt; n.getAttribute(&apos;href&apos;)));
+    const views=await listHandle.$$eval(&apos;.detail&gt;.data-box&apos;, nodes =&gt; nodes.map(n =&gt; n.innerText));
+    const images=await listHandle.$$eval(&apos;img&apos;, nodes =&gt; nodes.map(n =&gt; n.getAttribute(&apos;src&apos;)));
+
+    //序列化结果
+    const res=[];
+    for(let i=0;i&lt;100;i++){
+        res[i]={
+            rank:i+1,
+            title:titles[i],
+            author:authors[i],
+            pts:pts[i],
+            link:links[i],
+            view:views[i],
+            image:images[i]
+        }
+    }
+
+    //根据命令行输出数据
+    if (program.top_10) console.log(res.slice(0,10));
+    //写入数据
+    logger.info(res);
+    //关闭浏览器
+    await browser.close();
+});
+</code></pre><p>写入上面的内容，认真浏览阅读相关配置选项，然后补全相关依赖<code>npm i commander log4js</code>; 打开当前项目所在位置的命令行界面，输入<code>node .</code>程序运行的结果就会输出到根目录下的log目录中，如果想在命令行查看前10条数据，可以运行<code>node . -t</code>或<code>node . -top_10</code>即可， 第五步，上传代码到<a href="https://github.com/melorzhang/puppeteer-demo" target="_blank" rel="noopener">github</a>, ps：如果运行了<code>set PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1</code>，需设置本地chromium路径。另外，如果使用cnpm安装依赖，chromium似乎能正常下载下来，不妨试试</p>
+
+          
+            <div>广告位招租</div>
+          
+          <hr>
+          <ul class="pager">
+              
+              
+              <li class="next">
+                  <a href="/2018/08/02/e5-88-86-e4-ba-ab-e4-b8-80-e4-b8-aavue-e7-9a-84-e5-8f-8c-e5-90-91-e6-bb-91-e5-8a-a8-e6-a8-a1-e5-9d-97/" data-toggle="tooltip" data-placement="top"
+                     title="分享一个vue的双向滑动模块">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+        
+  <br>
+  
+
+  
+  </div>
+
+
+        
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          
+        
+    </div>
+  </div>
+
+
+      </div>
+  </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer>
+    <div class="text-center">
+      <ul class="list-inline">
+          
+              <li>
+                  <a href="/atom.xml" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+          
+          
+
+          
+
+          
+
+          
+              <li>
+                  <a target="_blank"  href="https://github.com/melorzhang">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+          
+
+          
+              <li>
+                  <a href="mailto:497112718@qq.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+      </ul>
+     <div class="text-muted copyright">
+            &copy;
+            
+              2018
+            
+            
+              <i class="fa fa-heart"></i>
+            
+            Melor
+        <br>
+          
+          
+          
+          
+      </div>
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

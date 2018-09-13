@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="一个基于前端，配合node的学习路线">
+    <meta name="author" content="Melor">
+    <meta name="keyword" content="全栈技术">
+    <link rel="canonical" href="http://yoursite.com/2017/06/27/0001/">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="alternate" type="application/atom+xml" title="&lt;div&gt;Melor&#39;s Blog&lt;/div&gt;" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <title>
+        
+        阿里云短信php开发实践｜Melor的博客
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/main.css">
+
+    
+      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/css/highlight.css">
+    
+
+    
+
+
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- user customization -->
+    <link rel="stylesheet" href="/css/arsnippet.css">
+    <script src="/js/arsnippet.css.js"></script>
+</head>
+
+<style>
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/">
+            <div>Melor's Blog</div>
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/">首页</a>
+                </li>
+              
+                <li>
+                  <a href="/archives/">博文列表</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/images/default_bg.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>阿里云短信php开发实践</h1>
+                        
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Melor</span>
+                               <span class="meta-item">Date: 2017-06-27</span>
+                               
+                                 <span class="meta-item">Updated On: 2018-09-13</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/categories/#技术分享"
+                                 title="技术分享">技术分享</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                              <a class="tag" href="/tags/#php"
+                                 title="php">php</a>
+                              
+                              <a class="tag" href="/tags/#短信"
+                                 title="短信">短信</a>
+                              
+                              <a class="tag" href="/tags/#阿里云"
+                                 title="阿里云">阿里云</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <div>什么都懂一点，生活更美好一些</div>
+          <p>本文简要记录实现阿里云短信验证码功能api的开发实践. 刚重拾php不久,下载了官网提供的php的sdk,结果简单修改一下demo里面一些参数,结果短信发不出去,搞了半天终于解决了,于是写篇心得来分享下. 准备事项: 1.域名,空间这些必须要有(本地模拟的也行); 2.成功在阿里云控制台中开通了短信服务功能 产品与服务-&gt;短信服务 的菜单下开通; 3.设置好 短信签名 和 短信模板,审核大概要半个小时左右; 4.下载并解压官方提供的sdk; 上面的功夫都解决了,下面就来开始划重点了. 如果你只需要用到发送短信功能,那么,你需要用到的是api_sdk目录下的两个文件夹,你应该直接把这两个文件夹复制到你的项目的根目录下,(不要多一层也不要少一层,因为用到的都是命名空间,目录错了就访问不了了),然后例如你的php文件是写在根目录下的话,那么引用就应该写成下面的样子; <code>include &#39;aliyun-php-sdk-core/Config.php&#39;; include_once &#39;Dysmsapi/Request/V20170525/SendSmsRequest.php&#39;; include_once &#39;Dysmsapi/Request/V20170525/QuerySendDetailsRequest.php&#39;;</code> 然后根据api_demo里面那个例子的sendsms函数改写,把一些要改的参数都改了,然后调用那个函数,就能成功发送短信啦. 目录结构 root |aliyun-php-sdk-core |Dysmsapi |sms.php sms.php的内容 <code>include &#39;aliyun-php-sdk-core/Config.php&#39;; include_once &#39;Dysmsapi/Request/V20170525/SendSmsRequest.php&#39;; include_once &#39;Dysmsapi/Request/V20170525/QuerySendDetailsRequest.php&#39;; function sendSms() { //此处需要替换成自己的AK信息 $accessKeyId = &quot;你的ki&quot;; $accessKeySecret = &quot;你的ks&quot;; //短信API产品名 $product = &quot;Dysmsapi&quot;; //短信API产品域名 $domain = &quot;dysmsapi.aliyuncs.com&quot;; //暂时不支持多Region $region = &quot;cn-hangzhou&quot;; //初始化访问的acsCleint $profile = DefaultProfile::getProfile($region, $accessKeyId, $accessKeySecret); DefaultProfile::addEndpoint(&quot;cn-hangzhou&quot;, &quot;cn-hangzhou&quot;, $product, $domain); $acsClient= new DefaultAcsClient($profile); $request = new Dysmsapi\Request\V20170525\SendSmsRequest; //必填-短信接收号码 $request-&gt;setPhoneNumbers(&quot;你的pn&quot;) //必填-短信签名 $request-&gt;setSignName(&quot;你的sn&quot;); //必填-短信模板Code $request-&gt;setTemplateCode(&quot;你的tc&quot;); //选填-假如模板中存在变量需要替换则为必填(JSON格式) $request-&gt;setTemplateParam(&quot;你的json&quot;); //选填-发送短信流水号 $request-&gt;setOutId(&quot;1234&quot;); //发起访问请求 $acsResponse = $acsClient-&gt;getAcsResponse($request); // var_dump($acsResponse); return $acsResponse; } sendSms()</code> 当然你可以根据需要修改php内容实现扩展功能~</p>
+
+          
+            <div>广告位招租</div>
+          
+          <hr>
+          <ul class="pager">
+              
+              <li class="previous">
+                  <a href="/2017/07/17/e7-bd-91-e6-98-93-e5-89-8d-e7-ab-af-e5-be-ae-e4-b8-93-e4-b8-9a-e5-a4-a7-e4-bd-9c-e4-b8-9a-e6-95-88-e6-9e-9c-e5-b1-95-e7-a4-ba/" data-toggle="tooltip" data-placement="left"
+                     title="网易前端微专业大作业效果展示">&larr; Previous Post</a>
+              </li>
+              
+              
+          </ul>
+        
+  <br>
+  
+
+  
+  </div>
+
+
+        
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          
+        
+    </div>
+  </div>
+
+
+      </div>
+  </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer>
+    <div class="text-center">
+      <ul class="list-inline">
+          
+              <li>
+                  <a href="/atom.xml" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+          
+          
+
+          
+
+          
+
+          
+              <li>
+                  <a target="_blank"  href="https://github.com/melorzhang">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+          
+
+          
+              <li>
+                  <a href="mailto:497112718@qq.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                  </a>
+              </li>
+          
+
+      </ul>
+     <div class="text-muted copyright">
+            &copy;
+            
+              2018
+            
+            
+              <i class="fa fa-heart"></i>
+            
+            Melor
+        <br>
+          
+          
+          
+          
+      </div>
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>
