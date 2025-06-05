@@ -6,7 +6,7 @@ import 'antd/dist/reset.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <BrowserRouter basename="/ziodnaot.github.io/">
+    <BrowserRouter basename="/manuselector/">
       <App />
     </BrowserRouter>
   </React.StrictMode>
