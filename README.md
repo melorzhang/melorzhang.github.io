@@ -1,0 +1,2 @@
+# manuselector
+manu select app
