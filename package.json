@@ -2,7 +2,7 @@
   "name": "manuselector",
   "version": "1.0.0",
   "description": "",
-  "homepage": "https://melorzhang.github.io/manuselector/",
+  "homepage": "https://melorzhang.github.io/",
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
     "antd": "^5.11.0",

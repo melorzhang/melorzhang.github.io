@@ -34,10 +34,9 @@ function App() {
       <Content className="flex-grow py-8">
         <div className="container mx-auto px-4">
           <Routes>
-            <Route path="/manuselector" element={<HomePage />} />
+            <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
-                        <Route path="/feature1" element={<FeatureOnePage />} />
-
+            <Route path="/feature1" element={<FeatureOnePage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

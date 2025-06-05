@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()], // 移除 vitePluginForGhPages
-  base: '/manuselector',
+  base: '/',
   build: {
     outDir: 'dist',
     rollupOptions: {
