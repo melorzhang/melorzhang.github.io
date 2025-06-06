@@ -33,8 +33,13 @@ const HomePage = () => {
             cover={<div className="bg-green-100 h-48 rounded-t-lg flex items-center justify-center">
               <SmileOutlined className="text-6xl text-green-500" />
             </div>}
+            actions={[
+              <Button type="link">
+                <Link to="/design-studio">进入室内设计画图制作室</Link>
+              </Button>
+            ]}
           >
-            <Card.Meta title="功能二" description="这里是功能二的描述信息" />
+            <Card.Meta title="设计图工作室" description="用来做设计" />
           </Card>
         </Col>
         <Col xs={24} sm={12} md={8}>
