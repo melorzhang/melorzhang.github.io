@@ -243,6 +243,7 @@ const FeatureOnePage = () => {
           form={form}
           isEditing={isEditing}
           onSubmit={handleSubmit}
+          optionList={optionList}
         />
       </Modal>
     </div>
