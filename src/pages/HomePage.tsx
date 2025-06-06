@@ -13,9 +13,10 @@ const HomePage = () => {
       >
         <p className="text-lg text-gray-700">这是一个使用 React、Vite 和 Ant Design 构建的示例网站</p>
       </Card>
-      
+
       <Row gutter={16}>
-        <Col span={8}>
+        <Col xs={24} sm={12} md={8}>
+
           <Card
             hoverable
             cover={<div className="bg-blue-100 h-48 rounded-t-lg flex items-center justify-center">
@@ -26,7 +27,7 @@ const HomePage = () => {
             <Card.Meta title="功能一" description="提供高效开发工具和团队协作能力" />
           </Card>
         </Col>
-        <Col span={8}>
+        <Col xs={24} sm={12} md={8}>
           <Card
             hoverable
             cover={<div className="bg-green-100 h-48 rounded-t-lg flex items-center justify-center">
@@ -36,7 +37,7 @@ const HomePage = () => {
             <Card.Meta title="功能二" description="这里是功能二的描述信息" />
           </Card>
         </Col>
-        <Col span={8}>
+        <Col xs={24} sm={12} md={8}>
           <Card
             hoverable
             cover={<div className="bg-purple-100 h-48 rounded-t-lg flex items-center justify-center">

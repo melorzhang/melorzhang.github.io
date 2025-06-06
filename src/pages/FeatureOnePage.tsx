@@ -5,11 +5,11 @@ import {
   Popconfirm, Modal, Space, Tag, Select 
 } from 'antd';
 
-// 定义数据结构
+// 定义数据结构，将 category 改为 categories 数组
 interface OptionItem {
   id: string;
   content: string;
-  category: string;
+  categories: string[];
 }
 
 const { Option } = Select;
@@ -38,12 +38,13 @@ const FeatureOnePage = () => {
   };
 
   // 处理表单提交
-  const handleSubmit = (values: { content: string; category: string }) => {
+  const handleSubmit = (values: { content: string; categories: string }) => {
+    const categoryArray = values.categories.split(',').map(cat => cat.trim()).filter(cat => cat.length > 0);
     if (isEditing && editingId) {
       // 更新现有项
       const updatedList = optionList.map(item => 
         item.id === editingId 
-          ? { ...item, content: values.content, category: values.category } 
+          ? { ...item, content: values.content, categories: categoryArray } 
           : item
       );
       setOptionList(updatedList);
@@ -53,7 +54,7 @@ const FeatureOnePage = () => {
       const newItem: OptionItem = {
         id: Date.now().toString(),
         content: values.content,
-        category: values.category
+        categories: categoryArray
       };
       setOptionList([...optionList, newItem]);
       saveToLocalStorage([...optionList, newItem]);
@@ -69,7 +70,7 @@ const FeatureOnePage = () => {
     if (itemToEdit) {
       form.setFieldsValue({
         content: itemToEdit.content,
-        category: itemToEdit.category
+        categories: itemToEdit.categories.join(',')
       });
       setIsEditing(true);
       setEditingId(id);
@@ -86,12 +87,23 @@ const FeatureOnePage = () => {
 
   // 分类统计
   const getCategoryCount = (category: string) => {
-    return optionList.filter(item => item.category === category).length;
+    let count = 0;
+    optionList.forEach(item => {
+      if (item.categories.includes(category)) {
+        count++;
+      }
+    });
+    return count;
   };
 
   // 获取所有分类
   const getCategories = () => {
-    const categories = new Set(optionList.map(item => item.category));
+    const categories = new Set<string>();
+    optionList.forEach(item => {
+      item.categories.forEach(category => {
+        categories.add(category);
+      });
+    });
     return Array.from(categories);
   };
 
@@ -105,12 +117,29 @@ const FeatureOnePage = () => {
     if (selectedCategories.length === 0) {
       return;
     }
-    const filteredOptions = optionList.filter(item => selectedCategories.includes(item.category));
+    const filteredOptions = optionList.filter(item => {
+      return item.categories.some(category => selectedCategories.includes(category));
+    });
     if (filteredOptions.length === 0) {
       return;
     }
     const randomIndex = Math.floor(Math.random() * filteredOptions.length);
     setRandomResult(filteredOptions[randomIndex]);
+  };
+
+  // 处理标签删除
+  const handleTagDelete = (id: string, category: string) => {
+    const updatedList = optionList.map(item => {
+      if (item.id === id) {
+        return {
+          ...item,
+          categories: item.categories.filter(cat => cat!== category)
+        };
+      }
+      return item;
+    });
+    setOptionList(updatedList);
+    saveToLocalStorage(updatedList);
   };
 
   return (
@@ -165,9 +194,11 @@ const FeatureOnePage = () => {
           className="mt-8 shadow-lg rounded-xl"
         >
           <p>{randomResult.content}</p>
-          <Tag color="green">
-            {randomResult.category}
-          </Tag>
+          {randomResult.categories.map(category => (
+            <Tag key={category} color="green" onClose={() => handleTagDelete(randomResult.id, category)} closable>
+              {category}
+            </Tag>
+          ))}
         </Card>
       )}
 
@@ -205,9 +236,11 @@ const FeatureOnePage = () => {
             <List.Item.Meta
               title={item.content}
               description={
-                <Tag color="green">
-                  {item.category}
-                </Tag>
+                item.categories.map(category => (
+                  <Tag key={category} color="green" onClose={() => handleTagDelete(item.id, category)} closable>
+                    {category}
+                  </Tag>
+                ))
               }
             />
           </List.Item>
@@ -236,8 +269,8 @@ const FeatureOnePage = () => {
             <Input.TextArea rows={4} placeholder="请输入选项内容" />
           </Form.Item>
           <Form.Item
-            label="选项分类"
-            name="category"
+            label="选项分类（多个分类用逗号分隔）"
+            name="categories"
             rules={[{ required: true, message: '请输入选项分类' }]}
           >
             <Input placeholder="请输入选项分类" />
