@@ -1,6 +1,6 @@
 // src/pages/FeatureOnePage.tsx
 import { useState, useEffect } from 'react';
-import { Card, Button, Modal, Space, message, Tag, Form } from 'antd';
+import { Card, Button, Modal, Space, message, Tag, Form, Select } from 'antd';
 import OptionForm from '../components/FeatureOnePage/OptionForm';
 import OptionList from '../components/FeatureOnePage/OptionList';
 import CategorySelector from '../components/FeatureOnePage/CategorySelector';
@@ -9,7 +9,7 @@ import CategorySelector from '../components/FeatureOnePage/CategorySelector';
 export interface OptionItem {
   id: string;
   content: string;
-  category: string;
+  category: string[];
 }
 
 const FeatureOnePage = () => {
@@ -21,6 +21,7 @@ const FeatureOnePage = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [randomResult, setRandomResult] = useState<OptionItem | null>(null);
+  const [lastRandomId, setLastRandomId] = useState<string | null>(null);
 
   // 从localStorage加载数据
   useEffect(() => {
@@ -36,12 +37,12 @@ const FeatureOnePage = () => {
   };
 
   // 处理表单提交
-  const handleSubmit = (values: { content: string; category: string }) => {
+  const handleSubmit = (values: { content: string; category: string[] }) => {
     if (isEditing && editingId) {
       // 更新现有项
-      const updatedList = optionList.map(item => 
-        item.id === editingId 
-          ? { ...item, content: values.content, category: values.category } 
+      const updatedList = optionList.map(item =>
+        item.id === editingId
+          ? { ...item, content: values.content, category: values.category }
           : item
       );
       setOptionList(updatedList);
@@ -68,7 +69,7 @@ const FeatureOnePage = () => {
     if (itemToEdit) {
       form.setFieldsValue({
         content: itemToEdit.content,
-        category: itemToEdit.category
+        category: itemToEdit.category // 直接赋值为数组
       });
       setIsEditing(true);
       setEditingId(id);
@@ -93,12 +94,19 @@ const FeatureOnePage = () => {
     if (selectedCategories.length === 0) {
       return;
     }
-    const filteredOptions = optionList.filter(item => selectedCategories.includes(item.category));
+    let filteredOptions = optionList.filter(item =>
+      item.category.some(cat => selectedCategories.includes(cat))
+    );
     if (filteredOptions.length === 0) {
       return;
     }
+    if (lastRandomId && filteredOptions.length > 1) {
+      filteredOptions = filteredOptions.filter(item => item.id !== lastRandomId);
+    }
     const randomIndex = Math.floor(Math.random() * filteredOptions.length);
-    setRandomResult(filteredOptions[randomIndex]);
+    const result = filteredOptions[randomIndex];
+    setRandomResult(result);
+    setLastRandomId(result.id);
   };
 
   // 清空缓存
@@ -146,9 +154,9 @@ const FeatureOnePage = () => {
         bordered={false}
         className="mb-8 shadow-lg rounded-xl"
       >
-        <Space>
-          <Button 
-            type="primary" 
+        <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+          <Button
+            type="primary"
             onClick={() => {
               form.resetFields();
               setIsEditing(false);
@@ -158,27 +166,27 @@ const FeatureOnePage = () => {
           >
             添加选项
           </Button>
-          <Button 
-            type="primary"
+          <Button
+            color="danger" variant="solid"
             onClick={handleClearCache}
           >
             清空缓存
           </Button>
-          <Button 
-            type="default" 
+          <Button
+            color="default" variant="solid"
             onClick={() => document.getElementById('file-upload')?.click()}
           >
             上传文件覆盖缓存
           </Button>
-          <input 
-            type="file" 
-            id="file-upload" 
-            style={{ display: 'none' }} 
-            accept=".json" 
-            onChange={handleFileUpload} 
+          <input
+            type="file"
+            id="file-upload"
+            style={{ display: 'none' }}
+            accept=".json"
+            onChange={handleFileUpload}
           />
-          <Button 
-            type="default" 
+          <Button
+            color="cyan" variant="solid"
             onClick={handleExport}
           >
             导出缓存信息
@@ -186,15 +194,15 @@ const FeatureOnePage = () => {
         </Space>
       </Card>
 
-      <CategorySelector 
+      <CategorySelector
         optionList={optionList}
         selectedCategories={selectedCategories}
         onCategorySelect={handleCategorySelect}
       />
 
       {/* 随机选择按钮 */}
-      <Button 
-        type="primary" 
+      <Button
+        type="primary"
         style={{ marginTop: '16px' }}
         onClick={handleRandomPick}
       >
@@ -209,13 +217,15 @@ const FeatureOnePage = () => {
           className="mt-8 shadow-lg rounded-xl"
         >
           <p>{randomResult.content}</p>
-          <Tag color="green">
-            {randomResult.category}
-          </Tag>
+          {randomResult.category.map(cat => (
+            <Tag color="green" key={cat}>
+              {cat}
+            </Tag>
+          ))}
         </Card>
       )}
 
-      <OptionList 
+      <OptionList
         optionList={optionList}
         onDelete={handleDelete}
         onEdit={handleEdit}
@@ -229,7 +239,7 @@ const FeatureOnePage = () => {
         onOk={() => form.submit()}
         okText={isEditing ? '更新' : '添加'}
       >
-        <OptionForm 
+        <OptionForm
           form={form}
           isEditing={isEditing}
           onSubmit={handleSubmit}

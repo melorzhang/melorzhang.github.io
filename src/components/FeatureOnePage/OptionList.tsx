@@ -18,8 +18,8 @@ const OptionList: React.FC<OptionListProps> = ({ optionList, onDelete, onEdit })
         renderItem={item => (
           <List.Item
             actions={[
-              <Popconfirm 
-                title="确定删除?" 
+              <Popconfirm
+                title="确定删除?"
                 onConfirm={() => onDelete(item.id)}
               >
                 <Button type="link" danger>
@@ -34,9 +34,13 @@ const OptionList: React.FC<OptionListProps> = ({ optionList, onDelete, onEdit })
             <List.Item.Meta
               title={item.content}
               description={
-                <Tag color="green">
-                  {item.category}
-                </Tag>
+                <>
+                  {item.category.map(cat => (
+                    <Tag color="green" key={cat}>
+                      {cat}
+                    </Tag>
+                  ))}
+                </>
               }
             />
           </List.Item>

@@ -1,10 +1,10 @@
 // src/components/FeatureOnePage/OptionForm.tsx
-import { Form, Input } from 'antd';
+import { Form, Input, Select } from 'antd';
 
 interface OptionFormProps {
   form: any;
   isEditing: boolean;
-  onSubmit: (values: { content: string; category: string }) => void;
+  onSubmit: (values: { content: string; category: string[] }) => void;
 }
 
 const OptionForm: React.FC<OptionFormProps> = ({ form, isEditing, onSubmit }) => {
@@ -27,7 +27,11 @@ const OptionForm: React.FC<OptionFormProps> = ({ form, isEditing, onSubmit }) =>
         name="category"
         rules={[{ required: true, message: '请输入选项分类' }]}
       >
-        <Input placeholder="请输入选项分类" />
+        <Select
+          mode="tags"
+          style={{ width: '100%' }}
+          placeholder="请输入或选择分类，回车可新增"
+        />
       </Form.Item>
     </Form>
   );

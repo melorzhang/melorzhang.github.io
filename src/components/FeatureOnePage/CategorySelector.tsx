@@ -12,11 +12,11 @@ interface CategorySelectorProps {
 }
 
 const getCategoryCount = (optionList: OptionItem[], category: string) => {
-  return optionList.filter(item => item.category === category).length;
+  return optionList.filter(item => item.category.includes(category)).length;
 };
 
 const getCategories = (optionList: OptionItem[]) => {
-  const categories = new Set(optionList.map(item => item.category));
+  const categories = new Set(optionList.flatMap(item => item.category));
   return Array.from(categories);
 };
 
