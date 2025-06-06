@@ -1,0 +1,10 @@
+/* 在小屏幕上调整菜单样式 */
+@media (max-width: 768px) {
+  .ant-menu-horizontal {
+    display: flex;
+    justify-content: space-around;
+  }
+  .ant-menu-item {
+    padding: 0 10px;
+  }
+}

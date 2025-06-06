@@ -1,18 +1,16 @@
 // src/pages/FeatureOnePage.tsx
 import { useState, useEffect } from 'react';
-import { 
-  Card, Form, Input, Button, List, Divider, 
-  Popconfirm, Modal, Space, Tag, Select 
-} from 'antd';
+import { Card, Button, Modal, Space, message, Tag, Form } from 'antd';
+import OptionForm from '../components/FeatureOnePage/OptionForm';
+import OptionList from '../components/FeatureOnePage/OptionList';
+import CategorySelector from '../components/FeatureOnePage/CategorySelector';
 
-// 定义数据结构，将 category 改为 categories 数组
-interface OptionItem {
+// 定义数据结构
+export interface OptionItem {
   id: string;
   content: string;
-  categories: string[];
+  category: string;
 }
-
-const { Option } = Select;
 
 const FeatureOnePage = () => {
   // 状态管理
@@ -38,13 +36,12 @@ const FeatureOnePage = () => {
   };
 
   // 处理表单提交
-  const handleSubmit = (values: { content: string; categories: string }) => {
-    const categoryArray = values.categories.split(',').map(cat => cat.trim()).filter(cat => cat.length > 0);
+  const handleSubmit = (values: { content: string; category: string }) => {
     if (isEditing && editingId) {
       // 更新现有项
       const updatedList = optionList.map(item => 
         item.id === editingId 
-          ? { ...item, content: values.content, categories: categoryArray } 
+          ? { ...item, content: values.content, category: values.category } 
           : item
       );
       setOptionList(updatedList);
@@ -54,7 +51,7 @@ const FeatureOnePage = () => {
       const newItem: OptionItem = {
         id: Date.now().toString(),
         content: values.content,
-        categories: categoryArray
+        category: values.category
       };
       setOptionList([...optionList, newItem]);
       saveToLocalStorage([...optionList, newItem]);
@@ -62,6 +59,7 @@ const FeatureOnePage = () => {
     form.resetFields();
     setIsEditing(false);
     setEditingId('');
+    setModalVisible(false);
   };
 
   // 处理编辑
@@ -70,7 +68,7 @@ const FeatureOnePage = () => {
     if (itemToEdit) {
       form.setFieldsValue({
         content: itemToEdit.content,
-        categories: itemToEdit.categories.join(',')
+        category: itemToEdit.category
       });
       setIsEditing(true);
       setEditingId(id);
@@ -85,28 +83,6 @@ const FeatureOnePage = () => {
     saveToLocalStorage(updatedList);
   };
 
-  // 分类统计
-  const getCategoryCount = (category: string) => {
-    let count = 0;
-    optionList.forEach(item => {
-      if (item.categories.includes(category)) {
-        count++;
-      }
-    });
-    return count;
-  };
-
-  // 获取所有分类
-  const getCategories = () => {
-    const categories = new Set<string>();
-    optionList.forEach(item => {
-      item.categories.forEach(category => {
-        categories.add(category);
-      });
-    });
-    return Array.from(categories);
-  };
-
   // 处理分类选择
   const handleCategorySelect = (values: string[]) => {
     setSelectedCategories(values);
@@ -117,9 +93,7 @@ const FeatureOnePage = () => {
     if (selectedCategories.length === 0) {
       return;
     }
-    const filteredOptions = optionList.filter(item => {
-      return item.categories.some(category => selectedCategories.includes(category));
-    });
+    const filteredOptions = optionList.filter(item => selectedCategories.includes(item.category));
     if (filteredOptions.length === 0) {
       return;
     }
@@ -127,19 +101,42 @@ const FeatureOnePage = () => {
     setRandomResult(filteredOptions[randomIndex]);
   };
 
-  // 处理标签删除
-  const handleTagDelete = (id: string, category: string) => {
-    const updatedList = optionList.map(item => {
-      if (item.id === id) {
-        return {
-          ...item,
-          categories: item.categories.filter(cat => cat!== category)
-        };
-      }
-      return item;
-    });
-    setOptionList(updatedList);
-    saveToLocalStorage(updatedList);
+  // 清空缓存
+  const handleClearCache = () => {
+    localStorage.removeItem('optionList');
+    setOptionList([]);
+    message.success('缓存已清空');
+  };
+
+  // 上传文件覆盖缓存
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const data = JSON.parse(event.target?.result as string);
+          setOptionList(data);
+          saveToLocalStorage(data);
+          message.success('缓存已被文件内容覆盖');
+        } catch (error) {
+          message.error('文件解析失败，请上传有效的 JSON 文件');
+        }
+      };
+      reader.readAsText(file);
+    }
+  };
+
+  // 导出缓存信息为 JSON 文件
+  const handleExport = () => {
+    const dataStr = JSON.stringify(optionList, null, 2);
+    const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+    const exportFileDefaultName = 'option_list.json';
+
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
   };
 
   return (
@@ -149,33 +146,51 @@ const FeatureOnePage = () => {
         bordered={false}
         className="mb-8 shadow-lg rounded-xl"
       >
-        <Button 
-          type="primary" 
-          onClick={() => {
-            form.resetFields();
-            setIsEditing(false);
-            setEditingId('');
-            setModalVisible(true);
-          }}
-        >
-          添加选项
-        </Button>
+        <Space>
+          <Button 
+            type="primary" 
+            onClick={() => {
+              form.resetFields();
+              setIsEditing(false);
+              setEditingId('');
+              setModalVisible(true);
+            }}
+          >
+            添加选项
+          </Button>
+          <Button 
+            type="primary"
+            onClick={handleClearCache}
+          >
+            清空缓存
+          </Button>
+          <Button 
+            type="default" 
+            onClick={() => document.getElementById('file-upload')?.click()}
+          >
+            上传文件覆盖缓存
+          </Button>
+          <input 
+            type="file" 
+            id="file-upload" 
+            style={{ display: 'none' }} 
+            accept=".json" 
+            onChange={handleFileUpload} 
+          />
+          <Button 
+            type="default" 
+            onClick={handleExport}
+          >
+            导出缓存信息
+          </Button>
+        </Space>
       </Card>
 
-      {/* 分类选择 */}
-      <Divider orientation="left">选择分类</Divider>
-      <Select
-        mode="multiple"
-        style={{ width: '100%' }}
-        placeholder="请选择分类"
-        onChange={handleCategorySelect}
-      >
-        {getCategories().map(category => (
-          <Option key={category} value={category}>
-            {category} ({getCategoryCount(category)})
-          </Option>
-        ))}
-      </Select>
+      <CategorySelector 
+        optionList={optionList}
+        selectedCategories={selectedCategories}
+        onCategorySelect={handleCategorySelect}
+      />
 
       {/* 随机选择按钮 */}
       <Button 
@@ -194,57 +209,16 @@ const FeatureOnePage = () => {
           className="mt-8 shadow-lg rounded-xl"
         >
           <p>{randomResult.content}</p>
-          {randomResult.categories.map(category => (
-            <Tag key={category} color="green" onClose={() => handleTagDelete(randomResult.id, category)} closable>
-              {category}
-            </Tag>
-          ))}
+          <Tag color="green">
+            {randomResult.category}
+          </Tag>
         </Card>
       )}
 
-      {/* 分类标签 */}
-      <Divider orientation="left">分类统计</Divider>
-      <div className="mb-8">
-        {getCategories().map(category => (
-          <Tag key={category} color="blue">
-            {category} ({getCategoryCount(category)})
-          </Tag>
-        ))}
-      </div>
-
-      {/* 选项列表 */}
-      <Divider orientation="left">选项列表</Divider>
-      <List
-        itemLayout="horizontal"
-        dataSource={optionList}
-        renderItem={item => (
-          <List.Item
-            actions={[
-              <Popconfirm 
-                title="确定删除?" 
-                onConfirm={() => handleDelete(item.id)}
-              >
-                <Button type="link" danger>
-                  删除
-                </Button>
-              </Popconfirm>,
-              <Button type="link" onClick={() => handleEdit(item.id)}>
-                编辑
-              </Button>
-            ]}
-          >
-            <List.Item.Meta
-              title={item.content}
-              description={
-                item.categories.map(category => (
-                  <Tag key={category} color="green" onClose={() => handleTagDelete(item.id, category)} closable>
-                    {category}
-                  </Tag>
-                ))
-              }
-            />
-          </List.Item>
-        )}
+      <OptionList 
+        optionList={optionList}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
       />
 
       {/* 添加/编辑模态框 */}
@@ -255,27 +229,11 @@ const FeatureOnePage = () => {
         onOk={() => form.submit()}
         okText={isEditing ? '更新' : '添加'}
       >
-        <Form
+        <OptionForm 
           form={form}
-          name="optionForm"
-          onFinish={handleSubmit}
-          autoComplete="off"
-        >
-          <Form.Item
-            label="选项内容"
-            name="content"
-            rules={[{ required: true, message: '请输入选项内容' }]}
-          >
-            <Input.TextArea rows={4} placeholder="请输入选项内容" />
-          </Form.Item>
-          <Form.Item
-            label="选项分类（多个分类用逗号分隔）"
-            name="categories"
-            rules={[{ required: true, message: '请输入选项分类' }]}
-          >
-            <Input placeholder="请输入选项分类" />
-          </Form.Item>
-        </Form>
+          isEditing={isEditing}
+          onSubmit={handleSubmit}
+        />
       </Modal>
     </div>
   );
