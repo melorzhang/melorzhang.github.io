@@ -22,9 +22,9 @@ const HomePage = () => {
             cover={<div className="bg-blue-100 h-48 rounded-t-lg flex items-center justify-center">
               <CodeOutlined className="text-6xl text-blue-500" />
             </div>}
-            actions={[<Button type="link"><Link to="/feature1">了解更多</Link></Button>]}
+            actions={[<Button type="link"><Link to="/feature1">点我进入选择器</Link></Button>]}
           >
-            <Card.Meta title="功能一" description="提供高效开发工具和团队协作能力" />
+            <Card.Meta title="选择器功能" description="提供自定义随机选择功能" />
           </Card>
         </Col>
         <Col xs={24} sm={12} md={8}>
