@@ -1,7 +1,9 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
-import pkg from './package.json';
+// 用 require 导入 JSON，避免 ts/rollup 解析问题
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const pkg = require('./package.json');
 
 export default defineConfig({
   define: {

@@ -151,7 +151,7 @@ const FeatureOnePage = () => {
     <div className="max-w-4xl mx-auto py-8">
       <Card
         title="选项管理"
-        bordered={false}
+        variant="outlined"
         className="mb-8 shadow-lg rounded-xl"
       >
         <Space direction="vertical" size="middle" style={{ width: '100%' }}>
@@ -213,7 +213,7 @@ const FeatureOnePage = () => {
       {randomResult && (
         <Card
           title="随机选择结果"
-          bordered={false}
+          variant="outlined"
           className="mt-8 shadow-lg rounded-xl"
         >
           <p>{randomResult.content}</p>

@@ -7,7 +7,7 @@ const HomePage = () => {
     <div className="space-y-8">
       <Card
         title="欢迎来到我的网站"
-        bordered={false}
+        variant="outlined"
         className="shadow-lg rounded-xl"
         extra={<Button type="primary">了解更多</Button>}
       >
