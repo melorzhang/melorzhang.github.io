@@ -4,8 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="refresh" content="0;url=/">
   <title>Redirecting...</title>
+  <script>
+    // 记录原始路径
+    localStorage.setItem('redirect_path', location.pathname + location.search + location.hash);
+    // 跳转到首页
+    location.replace('/');
+  </script>
 </head>
 
 <body>
