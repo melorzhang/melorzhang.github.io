@@ -13,6 +13,8 @@ const IHeader = () => {
                             菜单 <DownOutlined />
                         </a>
                     </Dropdown>
+                    <span className="text-xs text-gray-400 absolute right-4 top-1">{VERSION}</span>
+
                 </div>
             </div>
         </Header>)
