@@ -2,6 +2,7 @@ import { Dropdown } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { Header } from 'antd/es/layout/layout';
 import IManu from './Manu';
+import { VERSION } from '../version';
 
 const IHeader = () => {
     return (
