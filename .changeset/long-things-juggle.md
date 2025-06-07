@@ -1,5 +1,0 @@
----
-'manuselector': patch
----
-
-Normal update
