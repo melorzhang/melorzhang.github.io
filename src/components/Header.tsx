@@ -44,12 +44,12 @@ const IHeader = () => {
         const key = 'version-message';
         message.open({
             content: `当前版本：${VERSION}`,
-            duration: 10,
+            duration: 5,
             key,
             type: 'info',
             style: { position: 'fixed', right: 24, top: 24 }
         });
-        // 可选：10秒后手动关闭（其实 duration 已自动关闭）
+        // 可选：5秒后手动关闭（其实 duration 已自动关闭）
         // setTimeout(() => message.destroy(key), 10000);
     }, []);
 
